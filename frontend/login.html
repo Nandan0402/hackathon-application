@@ -3,155 +3,644 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Sign In | NexusAI Platform</title>
+  <title>Login – NexusAI Platform</title>
+
+  <!-- Google Font -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
   <link rel="stylesheet" href="css/variables.css">
   <link rel="stylesheet" href="css/main.css">
   <link rel="stylesheet" href="css/components.css">
   <link rel="stylesheet" href="css/navigation.css">
+
+  <style>
+    /* Split Login Page Styles */
+    body {
+      margin: 0;
+      padding: 0;
+      min-height: 100vh;
+      display: flex;
+      background: #f8fafc;
+      font-family: 'Plus Jakarta Sans', var(--font-family), sans-serif;
+      color: #1e293b;
+      overflow-x: hidden;
+    }
+
+    .split-layout {
+      display: flex;
+      width: 100vw;
+      min-height: 100vh;
+    }
+
+    /* Left Showcase Column */
+    .showcase-pane {
+      flex: 1.1;
+      padding: 3.5rem 4.5rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      background: #ffffff;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .showcase-pane::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 220px;
+      background: radial-gradient(circle at 20% 120%, rgba(219, 234, 254, 0.7), transparent 70%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .showcase-content {
+      position: relative;
+      z-index: 1;
+      max-width: 560px;
+    }
+
+    .brand-header {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      text-decoration: none;
+      margin-bottom: 2.5rem;
+    }
+
+    .brand-icon-box {
+      width: 38px;
+      height: 38px;
+      background: linear-gradient(135deg, #2563eb, #3b82f6);
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #ffffff;
+      font-weight: 800;
+      font-size: 1.2rem;
+      box-shadow: 0 4px 12px rgba(37, 99, 235, 0.25);
+    }
+
+    .brand-name {
+      font-size: 1.35rem;
+      font-weight: 800;
+      color: #0f172a;
+      letter-spacing: -0.02em;
+    }
+
+    .brand-name span {
+      color: #2563eb;
+    }
+
+    .pill-badge {
+      display: inline-flex;
+      align-items: center;
+      padding: 0.35rem 0.85rem;
+      background: #eff6ff;
+      color: #2563eb;
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      border-radius: 9999px;
+      margin-bottom: 1.5rem;
+      border: 1px solid #dbeafe;
+    }
+
+    .hero-headline {
+      font-size: 2.75rem;
+      font-weight: 800;
+      line-height: 1.15;
+      color: #0f172a;
+      letter-spacing: -0.03em;
+      margin-bottom: 1.25rem;
+    }
+
+    .hero-headline .highlight-blue {
+      color: #2563eb;
+    }
+
+    .hero-subtext {
+      font-size: 1.05rem;
+      color: #64748b;
+      line-height: 1.6;
+      margin-bottom: 2.5rem;
+    }
+
+    .features-list {
+      display: flex;
+      flex-direction: column;
+      gap: 1.35rem;
+    }
+
+    .feature-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 1rem;
+    }
+
+    .feature-icon-circle {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .icon-blue { background: #eff6ff; color: #2563eb; }
+    .icon-green { background: #ecfdf5; color: #059669; }
+    .icon-purple { background: #fdf4ff; color: #9333ea; }
+    .icon-orange { background: #fff7ed; color: #ea580c; }
+
+    .feature-title {
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: #1e293b;
+      margin-bottom: 0.15rem;
+    }
+
+    .feature-desc {
+      font-size: 0.85rem;
+      color: #64748b;
+      line-height: 1.4;
+    }
+
+    .showcase-footer {
+      font-size: 0.825rem;
+      color: #94a3b8;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* Right Form Column */
+    .form-pane {
+      flex: 0.9;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 2.5rem;
+      background: #f8fafc;
+      position: relative;
+    }
+
+    .login-card {
+      width: 100%;
+      max-width: 440px;
+      background: #ffffff;
+      border-radius: 20px;
+      padding: 2.5rem;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.04), 0 1px 3px rgba(0, 0, 0, 0.02);
+      border: 1px solid #e2e8f0;
+    }
+
+    .login-card-title {
+      font-size: 1.65rem;
+      font-weight: 800;
+      color: #0f172a;
+      letter-spacing: -0.02em;
+      margin-bottom: 0.35rem;
+    }
+
+    .login-card-subtitle {
+      font-size: 0.875rem;
+      color: #64748b;
+      margin-bottom: 1.5rem;
+    }
+
+    /* Role Pill Selector */
+    .role-pills {
+      display: flex;
+      background: #f1f5f9;
+      padding: 0.3rem;
+      border-radius: 12px;
+      gap: 0.35rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .role-pill-btn {
+      flex: 1;
+      padding: 0.5rem 0.75rem;
+      border: none;
+      background: transparent;
+      border-radius: 8px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: #64748b;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      font-family: inherit;
+    }
+
+    .role-pill-btn.active {
+      background: #ffffff;
+      color: #2563eb;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.06);
+    }
+
+    /* Form Fields */
+    .field-label {
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: #334155;
+      margin-bottom: 0.4rem;
+      display: block;
+    }
+
+    .field-input-box {
+      display: flex;
+      align-items: center;
+      background: #f1f5f9;
+      border: 1px solid transparent;
+      border-radius: 10px;
+      padding: 0.75rem 1rem;
+      gap: 0.75rem;
+      transition: all 0.2s ease;
+    }
+
+    .field-input-box:focus-within {
+      background: #ffffff;
+      border-color: #2563eb;
+      box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.12);
+    }
+
+    .field-input-box svg {
+      color: #94a3b8;
+      flex-shrink: 0;
+    }
+
+    .field-input-box input {
+      border: none;
+      background: transparent;
+      width: 100%;
+      font-size: 0.9rem;
+      color: #0f172a;
+      outline: none;
+      font-family: inherit;
+    }
+
+    .field-input-box input::placeholder {
+      color: #94a3b8;
+    }
+
+    .toggle-password-btn {
+      background: transparent;
+      border: none;
+      cursor: pointer;
+      color: #94a3b8;
+      display: flex;
+      align-items: center;
+      padding: 0;
+    }
+
+    .toggle-password-btn:hover {
+      color: #475569;
+    }
+
+    .btn-submit-blue {
+      width: 100%;
+      padding: 0.85rem 1.25rem;
+      background: #2563eb;
+      color: #ffffff;
+      border: none;
+      border-radius: 10px;
+      font-size: 0.95rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      font-family: inherit;
+      box-shadow: 0 4px 12px rgba(37, 99, 235, 0.2);
+    }
+
+    .btn-submit-blue:hover {
+      background: #1d4ed8;
+      box-shadow: 0 6px 16px rgba(37, 99, 235, 0.3);
+    }
+
+    /* Social & Credentials Row */
+    .or-divider {
+      display: flex;
+      align-items: center;
+      text-align: center;
+      margin: 1.5rem 0 1.25rem;
+      color: #94a3b8;
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+    }
+
+    .or-divider::before, .or-divider::after {
+      content: '';
+      flex: 1;
+      border-bottom: 1px solid #e2e8f0;
+    }
+
+    .or-divider span {
+      padding: 0 0.75rem;
+    }
+
+    .alt-auth-row {
+      display: flex;
+      gap: 0.75rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .alt-auth-btn {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      padding: 0.65rem 0.85rem;
+      background: #ffffff;
+      border: 1px solid #e2e8f0;
+      border-radius: 10px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: #334155;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      font-family: inherit;
+    }
+
+    .alt-auth-btn:hover {
+      background: #f8fafc;
+      border-color: #cbd5e1;
+    }
+
+    /* Demo Credentials Dropdown / Box */
+    .demo-box {
+      margin-top: 1rem;
+      padding: 1rem;
+      background: #f8fafc;
+      border: 1px dashed #cbd5e1;
+      border-radius: 10px;
+      display: none;
+    }
+
+    .demo-box.show {
+      display: block;
+      animation: fadeIn 0.2s ease;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(-5px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Responsive */
+    @media (max-width: 960px) {
+      .split-layout { flex-direction: column; }
+      .showcase-pane { display: none; }
+      .form-pane { padding: 1.5rem; }
+    }
+  </style>
 </head>
-<body style="justify-content: center; align-items: center; min-height: 100vh; position: relative;">
-
-  <div class="bg-glow"></div>
-
-  <!-- Top Simple Brand Header -->
-  <header style="position: absolute; top: 1.5rem; left: 2rem;">
-    <a href="index.html" class="brand-logo">
-      <div class="brand-icon">N</div>
-      <span>Nexus<span class="text-green">AI</span></span>
-    </a>
-  </header>
+<body>
 
   <!-- Loading Overlay for Auth -->
   <div id="auth-loading-overlay" class="loading-overlay">
     <div class="spinner spinner-green spinner-lg"></div>
-    <div style="font-size: 1.125rem; font-weight: 600; color: var(--text-main);" id="loading-overlay-text">Authenticating Credentials...</div>
-    <div style="font-size: 0.875rem; color: var(--text-muted);">Communicating with authentication service</div>
+    <div style="font-size: 1.125rem; font-weight: 600; color: var(--text-main); margin-top: 1rem;" id="loading-overlay-text">Authenticating Credentials...</div>
+    <div style="font-size: 0.875rem; color: var(--text-muted); margin-top: 0.25rem;">Communicating with authentication service</div>
   </div>
 
-  <div class="container container-narrow" style="padding: 2rem 1rem;">
-    <div class="card card-glass card-accent-top">
-      <div style="text-align: center; margin-bottom: 1.5rem;">
-        <h2 style="margin-bottom: 0.5rem;">Welcome Back</h2>
-        <p id="role-notice-text">Sign in to access your NexusAI Portal</p>
-      </div>
+  <div class="split-layout">
+    
+    <!-- LEFT COLUMN: BRAND & VALUE SHOWCASE -->
+    <div class="showcase-pane">
+      <div class="showcase-content">
+        
+        <a href="index.html" class="brand-header">
+          <div class="brand-icon-box">N</div>
+          <span class="brand-name">Nexus<span>AI</span></span>
+        </a>
 
-      <!-- General Alert Container for Global Auth Errors / Warnings -->
-      <div id="auth-error-alert" class="alert alert-danger" style="display: none;">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#ef4444" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg>
-        <span id="auth-error-message">Invalid email or password.</span>
-      </div>
-
-      <!-- Role Selector Toggle Buttons -->
-      <div style="display: flex; gap: 0.5rem; margin-bottom: 1.5rem; background: var(--bg-dark); padding: 0.35rem; border-radius: var(--radius-md); border: 1px solid var(--border-color-light);">
-        <button type="button" class="btn btn-primary role-select-btn flex-1" data-role="worker" id="role-btn-worker">Worker</button>
-        <button type="button" class="btn btn-secondary role-select-btn flex-1" data-role="employer" id="role-btn-employer">Employer</button>
-        <button type="button" class="btn btn-secondary role-select-btn flex-1" data-role="admin" id="role-btn-admin">Admin</button>
-      </div>
-
-      <!-- Google One-Click Sign In -->
-      <button type="button" class="btn btn-secondary btn-block btn-lg" id="google-auth-btn" style="display: flex; align-items: center; justify-content: center; gap: 0.75rem; margin-bottom: 1.25rem; background: #ffffff; color: #1f2937; border: 1px solid #e5e7eb; font-weight: 600;">
-        <svg width="20" height="20" viewBox="0 0 24 24">
-          <path fill="#4285F4" d="M23.745 12.27c0-.7-.06-1.4-.19-2.07H12v4.51h6.6c-.29 1.52-1.14 2.82-2.4 3.68v3.05h3.88c2.27-2.09 3.665-5.17 3.665-9.17z"/>
-          <path fill="#34A853" d="M12 24c3.24 0 5.95-1.08 7.93-2.91l-3.88-3.05c-1.08.72-2.45 1.16-4.05 1.16-3.12 0-5.77-2.1-6.72-4.93H1.26v3.15C3.26 21.36 7.33 24 12 24z"/>
-          <path fill="#FBBC05" d="M5.28 14.27c-.25-.72-.38-1.49-.38-2.27s.13-1.55.38-2.27V6.58H1.26C.46 8.16 0 9.94 0 12s.46 3.84 1.26 5.42l4.02-3.15z"/>
-          <path fill="#EA4335" d="M12 4.75c1.77 0 3.35.61 4.6 1.8l3.42-3.42C17.95 1.19 15.24 0 12 0 7.33 0 3.26 2.64 1.26 6.58l4.02 3.15c.95-2.83 3.6-4.98 6.72-4.98z"/>
-        </svg>
-        Continue with Google
-      </button>
-
-      <div style="display: flex; align-items: center; text-align: center; margin-bottom: 1.25rem; color: var(--text-muted); font-size: 0.8rem;">
-        <span style="flex: 1; border-bottom: 1px solid var(--border-color);"></span>
-        <span style="padding: 0 0.75rem;">OR SIGN IN WITH EMAIL</span>
-        <span style="flex: 1; border-bottom: 1px solid var(--border-color);"></span>
-      </div>
-
-      <form id="login-form" novalidate>
-        <input type="hidden" id="selected-role-input" value="worker">
-
-        <div class="form-group" id="email-group">
-          <label class="form-label" for="email">Email Address</label>
-          <div class="input-icon-wrapper">
-            <svg class="input-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
-            <input type="email" id="email" class="form-control" placeholder="name@domain.com" required value="worker.demo@hackathon.local">
-          </div>
-          <span class="form-error" id="email-error">Please enter a valid email address.</span>
+        <div class="pill-badge">
+          INTELLIGENT HR AUTOMATION
         </div>
 
-        <div class="form-group" id="password-group">
-          <div class="form-label">
-            <span>Password</span>
-            <a href="#" style="font-size: 0.75rem;" onclick="window.showToast('Password reset link sent if account exists', 'info'); return false;">Forgot password?</a>
-          </div>
-          <div class="input-icon-wrapper">
-            <svg class="input-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
-            <input type="password" id="password" class="form-control" placeholder="••••••••" required value="Worker@12345">
-          </div>
-          <span class="form-error" id="password-error">Password is required.</span>
-        </div>
+        <h1 class="hero-headline">
+          One Platform.<br>
+          Infinite <span class="highlight-blue">Possibilities.</span>
+        </h1>
 
-        <div class="form-group" style="margin-bottom: 1.5rem;">
-          <label style="display: flex; align-items: center; gap: 0.5rem; font-size: 0.875rem; color: var(--text-muted); cursor: pointer;">
-            <input type="checkbox" id="remember-me" checked style="accent-color: var(--accent-green);"> Remember session on this browser
-          </label>
-        </div>
+        <p class="hero-subtext">
+          Automate workflows, streamline trade operations and empower your workforce with AI-driven insights.
+        </p>
 
-        <button type="submit" class="btn btn-primary btn-block btn-lg" id="login-submit-btn">
-          Sign In & Launch Dashboard
-        </button>
-      </form>
-
-      <!-- DEMO CREDENTIALS BOX -->
-      <div class="demo-credentials-box" style="margin-top: 1.75rem; padding: 1.25rem; background: rgba(15, 23, 42, 0.6); border: 1px dashed var(--border-color); border-radius: var(--radius-md);">
-        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.75rem;">
-          <span style="font-size: 0.85rem; font-weight: 700; color: var(--accent-green); text-transform: uppercase; letter-spacing: 0.05em; display: flex; align-items: center; gap: 0.4rem;">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
-            Hackathon Demo Credentials
-          </span>
-          <span style="font-size: 0.75rem; color: var(--text-muted);">One-Click Autofill</span>
-        </div>
-
-        <div style="display: flex; flex-direction: column; gap: 0.6rem;">
-          <!-- Worker Demo -->
-          <div style="display: flex; align-items: center; justify-content: space-between; padding: 0.5rem 0.75rem; background: var(--bg-dark); border-radius: var(--radius-sm); border: 1px solid var(--border-color-light);">
-            <div>
-              <div style="font-size: 0.825rem; font-weight: 600; color: var(--text-main);">Worker</div>
-              <div style="font-size: 0.75rem; color: var(--text-muted); font-family: monospace;">worker.demo@hackathon.local</div>
+        <div class="features-list">
+          <div class="feature-item">
+            <div class="feature-icon-circle icon-blue">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
             </div>
-            <button type="button" class="btn btn-secondary btn-sm use-demo-btn" data-demo-role="worker" data-email="worker.demo@hackathon.local" data-password="Worker@12345" style="padding: 0.25rem 0.65rem; font-size: 0.75rem;">
-              Use Credentials
-            </button>
+            <div>
+              <div class="feature-title">Smart Automation</div>
+              <div class="feature-desc">Automate repetitive screening tasks and save time.</div>
+            </div>
           </div>
 
-          <!-- Employer Demo -->
-          <div style="display: flex; align-items: center; justify-content: space-between; padding: 0.5rem 0.75rem; background: var(--bg-dark); border-radius: var(--radius-sm); border: 1px solid var(--border-color-light);">
-            <div>
-              <div style="font-size: 0.825rem; font-weight: 600; color: var(--text-main);">Employer</div>
-              <div style="font-size: 0.75rem; color: var(--text-muted); font-family: monospace;">employer.demo@hackathon.local</div>
+          <div class="feature-item">
+            <div class="feature-icon-circle icon-green">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
             </div>
-            <button type="button" class="btn btn-secondary btn-sm use-demo-btn" data-demo-role="employer" data-email="employer.demo@hackathon.local" data-password="Employer@12345" style="padding: 0.25rem 0.65rem; font-size: 0.75rem;">
-              Use Credentials
-            </button>
+            <div>
+              <div class="feature-title">Secure & Compliant</div>
+              <div class="feature-desc">Enterprise-grade security and verified skill credentials.</div>
+            </div>
           </div>
 
-          <!-- Admin Demo -->
-          <div style="display: flex; align-items: center; justify-content: space-between; padding: 0.5rem 0.75rem; background: var(--bg-dark); border-radius: var(--radius-sm); border: 1px solid var(--border-color-light);">
-            <div>
-              <div style="font-size: 0.825rem; font-weight: 600; color: var(--text-main);">Admin</div>
-              <div style="font-size: 0.75rem; color: var(--text-muted); font-family: monospace;">admin.demo@hackathon.local</div>
+          <div class="feature-item">
+            <div class="feature-icon-circle icon-purple">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
             </div>
-            <button type="button" class="btn btn-secondary btn-sm use-demo-btn" data-demo-role="admin" data-email="admin.demo@hackathon.local" data-password="Admin@12345" style="padding: 0.25rem 0.65rem; font-size: 0.75rem;">
-              Use Credentials
-            </button>
+            <div>
+              <div class="feature-title">Data-Driven Insights</div>
+              <div class="feature-desc">Make better decisions with real-time vector analytics.</div>
+            </div>
+          </div>
+
+          <div class="feature-item">
+            <div class="feature-icon-circle icon-orange">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+            </div>
+            <div>
+              <div class="feature-title">Built for Every Role</div>
+              <div class="feature-desc">Worker, Employer, and Admin — All in one.</div>
+            </div>
           </div>
         </div>
+
       </div>
 
-      <div style="margin-top: 1.5rem; text-align: center; font-size: 0.875rem; color: var(--text-muted);">
-        Don't have an account? <a href="register.html" style="font-weight: 600;">Create Account</a>
+      <div class="showcase-footer">
+        © 2026 Nexus AI. All rights reserved.
       </div>
     </div>
+
+    <!-- RIGHT COLUMN: LOGIN FORM CARD -->
+    <div class="form-pane">
+      <div class="login-card">
+        
+        <h2 class="login-card-title">Welcome Back!</h2>
+        <p class="login-card-subtitle" id="role-notice-text">Sign in to continue to Nexus AI</p>
+
+        <!-- General Alert Container for Global Auth Errors -->
+        <div id="auth-error-alert" class="alert alert-danger" style="display: none; margin-bottom: 1.25rem;">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#ef4444" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg>
+          <span id="auth-error-message">Invalid email or password.</span>
+        </div>
+
+        <!-- Role Selector Tabs -->
+        <div class="role-pills">
+          <button type="button" class="role-pill-btn active role-select-btn" data-role="worker" id="role-btn-worker">Worker</button>
+          <button type="button" class="role-pill-btn role-select-btn" data-role="employer" id="role-btn-employer">Employer</button>
+          <button type="button" class="role-pill-btn role-select-btn" data-role="admin" id="role-btn-admin">Admin</button>
+        </div>
+
+        <form id="login-form" novalidate>
+          <input type="hidden" id="selected-role-input" value="worker">
+
+          <!-- Email Field -->
+          <div style="margin-bottom: 1.15rem;" id="email-group">
+            <label class="field-label" for="email">Email Address</label>
+            <div class="field-input-box">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+              <input type="email" id="email" placeholder="name@company.com" required value="worker.demo@hackathon.local">
+            </div>
+            <span class="form-error" id="email-error" style="display: none; color: #ef4444; font-size: 0.75rem; margin-top: 0.25rem;">Please enter a valid email address.</span>
+          </div>
+
+          <!-- Password Field -->
+          <div style="margin-bottom: 1.15rem;" id="password-group">
+            <label class="field-label" for="password">Password</label>
+            <div class="field-input-box">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+              <input type="password" id="password" placeholder="••••••••" required value="Worker@12345">
+              <button type="button" class="toggle-password-btn" id="toggle-password-btn" title="Toggle password visibility">
+                <svg id="eye-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+              </button>
+            </div>
+            <span class="form-error" id="password-error" style="display: none; color: #ef4444; font-size: 0.75rem; margin-top: 0.25rem;">Password is required.</span>
+          </div>
+
+          <!-- Remember me & Forgot Password -->
+          <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 1.5rem; font-size: 0.825rem;">
+            <label style="display: flex; align-items: center; gap: 0.45rem; color: #64748b; cursor: pointer;">
+              <input type="checkbox" id="remember-me" checked style="accent-color: #2563eb;"> Remember me
+            </label>
+            <a href="#" style="color: #2563eb; text-decoration: none; font-weight: 600;" onclick="window.showToast ? window.showToast('Password reset instructions sent', 'info') : alert('Reset instructions sent'); return false;">Forgot Password?</a>
+          </div>
+
+          <!-- Submit Button -->
+          <button type="submit" class="btn-submit-blue" id="login-submit-btn">
+            <span>Sign In</span>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+          </button>
+        </form>
+
+        <!-- Divider -->
+        <div class="or-divider">
+          <span>OR SIGN IN WITH</span>
+        </div>
+
+        <!-- Social / Credentials Actions -->
+        <div class="alt-auth-row">
+          <!-- Google Auth Button -->
+          <button type="button" class="alt-auth-btn" id="google-auth-btn">
+            <svg width="18" height="18" viewBox="0 0 24 24">
+              <path fill="#4285F4" d="M23.745 12.27c0-.7-.06-1.4-.19-2.07H12v4.51h6.6c-.29 1.52-1.14 2.82-2.4 3.68v3.05h3.88c2.27-2.09 3.665-5.17 3.665-9.17z"/>
+              <path fill="#34A853" d="M12 24c3.24 0 5.95-1.08 7.93-2.91l-3.88-3.05c-1.08.72-2.45 1.16-4.05 1.16-3.12 0-5.77-2.1-6.72-4.93H1.26v3.15C3.26 21.36 7.33 24 12 24z"/>
+              <path fill="#FBBC05" d="M5.28 14.27c-.25-.72-.38-1.49-.38-2.27s.13-1.55.38-2.27V6.58H1.26C.46 8.16 0 9.94 0 12s.46 3.84 1.26 5.42l4.02-3.15z"/>
+              <path fill="#EA4335" d="M12 4.75c1.77 0 3.35.61 4.6 1.8l3.42-3.42C17.95 1.19 15.24 0 12 0 7.33 0 3.26 2.64 1.26 6.58l4.02 3.15c.95-2.83 3.6-4.98 6.72-4.98z"/>
+            </svg>
+            <span>Google</span>
+          </button>
+
+          <!-- Toggle Demo Credentials Drawer -->
+          <button type="button" class="alt-auth-btn" id="toggle-demo-credentials-btn">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#2563eb" stroke-width="2"><path d="M21 2l-2 2m-1.5 1.5L16 7l-1.5-1.5M19 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2h6"/><circle cx="8" cy="11" r="2"/></svg>
+            <span>Credentials</span>
+          </button>
+        </div>
+
+        <!-- DEMO CREDENTIALS DRAWER -->
+        <div class="demo-box" id="demo-credentials-drawer">
+          <div style="font-size: 0.75rem; font-weight: 700; color: #2563eb; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.6rem;">
+            One-Click Demo Credentials
+          </div>
+          <div style="display: flex; flex-direction: column; gap: 0.45rem;">
+            <div style="display: flex; align-items: center; justify-content: space-between; padding: 0.4rem 0.6rem; background: #ffffff; border-radius: 6px; border: 1px solid #e2e8f0;">
+              <div>
+                <span style="font-size: 0.775rem; font-weight: 700; color: #1e293b;">Worker</span>
+                <span style="font-size: 0.725rem; color: #64748b; margin-left: 0.3rem;">worker.demo@hackathon.local</span>
+              </div>
+              <button type="button" class="use-demo-btn" data-demo-role="worker" data-email="worker.demo@hackathon.local" data-password="Worker@12345" style="padding: 0.2rem 0.5rem; background: #eff6ff; color: #2563eb; border: 1px solid #bfdbfe; border-radius: 4px; font-size: 0.725rem; font-weight: 600; cursor: pointer;">
+                Autofill
+              </button>
+            </div>
+            <div style="display: flex; align-items: center; justify-content: space-between; padding: 0.4rem 0.6rem; background: #ffffff; border-radius: 6px; border: 1px solid #e2e8f0;">
+              <div>
+                <span style="font-size: 0.775rem; font-weight: 700; color: #1e293b;">Employer</span>
+                <span style="font-size: 0.725rem; color: #64748b; margin-left: 0.3rem;">employer.demo@hackathon.local</span>
+              </div>
+              <button type="button" class="use-demo-btn" data-demo-role="employer" data-email="employer.demo@hackathon.local" data-password="Employer@12345" style="padding: 0.2rem 0.5rem; background: #eff6ff; color: #2563eb; border: 1px solid #bfdbfe; border-radius: 4px; font-size: 0.725rem; font-weight: 600; cursor: pointer;">
+                Autofill
+              </button>
+            </div>
+            <div style="display: flex; align-items: center; justify-content: space-between; padding: 0.4rem 0.6rem; background: #ffffff; border-radius: 6px; border: 1px solid #e2e8f0;">
+              <div>
+                <span style="font-size: 0.775rem; font-weight: 700; color: #1e293b;">Admin</span>
+                <span style="font-size: 0.725rem; color: #64748b; margin-left: 0.3rem;">admin.demo@hackathon.local</span>
+              </div>
+              <button type="button" class="use-demo-btn" data-demo-role="admin" data-email="admin.demo@hackathon.local" data-password="Admin@12345" style="padding: 0.2rem 0.5rem; background: #eff6ff; color: #2563eb; border: 1px solid #bfdbfe; border-radius: 4px; font-size: 0.725rem; font-weight: 600; cursor: pointer;">
+                Autofill
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Link to Register -->
+        <div style="margin-top: 1.5rem; text-align: center; font-size: 0.85rem; color: #64748b;">
+          Don't have an account? <a href="register.html" style="color: #2563eb; font-weight: 700; text-decoration: none;">Sign Up</a>
+        </div>
+
+      </div>
+    </div>
+
   </div>
+
+  <script>
+    // Password visibility toggle helper
+    document.addEventListener('DOMContentLoaded', () => {
+      const togglePasswordBtn = document.getElementById('toggle-password-btn');
+      const passwordInput = document.getElementById('password');
+      if (togglePasswordBtn && passwordInput) {
+        togglePasswordBtn.addEventListener('click', () => {
+          const isPassword = passwordInput.type === 'password';
+          passwordInput.type = isPassword ? 'text' : 'password';
+        });
+      }
+
+      // Demo credentials drawer toggle
+      const toggleDemoBtn = document.getElementById('toggle-demo-credentials-btn');
+      const demoDrawer = document.getElementById('demo-credentials-drawer');
+      if (toggleDemoBtn && demoDrawer) {
+        toggleDemoBtn.addEventListener('click', () => {
+          demoDrawer.classList.toggle('show');
+        });
+      }
+    });
+  </script>
 
   <script src="js/main.js"></script>
   <script type="module" src="js/firebase-client.js"></script>

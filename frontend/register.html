@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Create Account | NexusAI Platform</title>
+
+  <link rel="stylesheet" href="css/variables.css">
+  <link rel="stylesheet" href="css/main.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/navigation.css">
+</head>
+<body style="justify-content: center; align-items: center; min-height: 100vh; position: relative;">
+
+  <div class="bg-glow"></div>
+  <div class="bg-glow-blue"></div>
+
+  <header style="position: absolute; top: 1.5rem; left: 2rem;">
+    <a href="index.html" class="brand-logo">
+      <div class="brand-icon">N</div>
+      <span>Nexus<span class="text-green">AI</span></span>
+    </a>
+  </header>
+
+  <!-- Loading Overlay for Registration -->
+  <div id="auth-loading-overlay" class="loading-overlay">
+    <div class="spinner spinner-green spinner-lg"></div>
+    <div style="font-size: 1.125rem; font-weight: 600; color: var(--text-main);" id="loading-overlay-text">Creating Account...</div>
+    <div style="font-size: 0.875rem; color: var(--text-muted);">Initializing vector profile and credentials</div>
+  </div>
+
+  <div class="container container-narrow" style="padding: 2rem 1rem;">
+    <div class="card card-glass card-accent-top">
+      <div style="text-align: center; margin-bottom: 1.5rem;">
+        <h2 style="margin-bottom: 0.5rem;">Join NexusAI</h2>
+        <p>Create your candidate or employer account</p>
+      </div>
+
+      <!-- General Alert Container for Registration Errors -->
+      <div id="auth-error-alert" class="alert alert-danger" style="display: none;">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#ef4444" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg>
+        <span id="auth-error-message">Registration failed. Please check inputs.</span>
+      </div>
+
+      <!-- Role Selector Toggle Buttons: Worker vs Employer -->
+      <div style="display: flex; gap: 0.5rem; margin-bottom: 1.5rem; background: var(--bg-dark); padding: 0.35rem; border-radius: var(--radius-md); border: 1px solid var(--border-color-light);">
+        <button type="button" class="btn btn-primary role-select-btn flex-1" data-role="worker">Worker</button>
+        <button type="button" class="btn btn-secondary role-select-btn flex-1" data-role="employer">Employer</button>
+      </div>
+
+      <form id="register-form" novalidate>
+        <input type="hidden" id="selected-role-input" value="worker">
+
+        <!-- Name Field -->
+        <div class="form-group" id="name-group">
+          <label class="form-label" for="full-name">Full Name</label>
+          <div class="input-icon-wrapper">
+            <svg class="input-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+            <input type="text" id="full-name" class="form-control" placeholder="e.g. Alex Rivera" required>
+          </div>
+          <span class="form-error" id="name-error">Please enter your full name (minimum 2 characters).</span>
+        </div>
+
+        <!-- Email Field -->
+        <div class="form-group" id="email-group">
+          <label class="form-label" for="email">Work Email Address</label>
+          <div class="input-icon-wrapper">
+            <svg class="input-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+            <input type="email" id="email" class="form-control" placeholder="name@domain.com" required>
+          </div>
+          <span class="form-error" id="email-error">Please enter a valid email address.</span>
+        </div>
+
+        <!-- Password Field -->
+        <div class="form-group" id="password-group">
+          <label class="form-label" for="password">Password</label>
+          <div class="input-icon-wrapper">
+            <svg class="input-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+            <input type="password" id="password" class="form-control" placeholder="Minimum 6 characters" required>
+          </div>
+          <span class="form-error" id="password-error">Password must be at least 6 characters.</span>
+        </div>
+
+        <!-- Location Field -->
+        <div class="form-group" id="location-group">
+          <label class="form-label" for="location">Location (City, Country / Remote)</label>
+          <div class="input-icon-wrapper">
+            <svg class="input-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+            <input type="text" id="location" class="form-control" placeholder="e.g. San Francisco, CA or Remote" required>
+          </div>
+          <span class="form-error" id="location-error">Please enter your location.</span>
+        </div>
+
+        <div class="form-group" style="margin-bottom: 1.5rem;">
+          <label style="display: flex; align-items: flex-start; gap: 0.5rem; font-size: 0.8rem; color: var(--text-muted); cursor: pointer;">
+            <input type="checkbox" id="terms-checkbox" required checked style="accent-color: var(--accent-green); margin-top: 0.2rem;"> 
+            I agree to the Terms of Service and AI Automated Vector Screening Consent.
+          </label>
+        </div>
+
+        <button type="submit" class="btn btn-primary btn-block btn-lg" id="register-submit-btn">
+          Create Account & Sign In
+        </button>
+      </form>
+
+      <div style="margin-top: 1.5rem; text-align: center; font-size: 0.875rem; color: var(--text-muted);">
+        Already have an account? <a href="login.html" style="font-weight: 600;">Sign In</a>
+      </div>
+    </div>
+  </div>
+
+  <script src="js/main.js"></script>
+  <script src="js/auth.js"></script>
+</body>
+</html>

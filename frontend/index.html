@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NexusAI | Next-Gen AI Hiring & Autonomous Talent Platform</title>
+  <meta name="description" content="Enterprise-grade AI hiring platform featuring vector candidate matching, resume intelligence, and automated pipeline screening.">
+  
+  <!-- CSS Design System Styles -->
+  <link rel="stylesheet" href="css/variables.css">
+  <link rel="stylesheet" href="css/main.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/navigation.css">
+  <link rel="stylesheet" href="css/dashboard.css">
+</head>
+<body>
+  <div class="bg-glow"></div>
+  <div class="bg-glow-blue"></div>
+
+  <!-- PUBLIC NAVIGATION HEADER -->
+  <header class="navbar">
+    <div class="container nav-container">
+      <a href="index.html" class="brand-logo">
+        <div class="brand-icon">N</div>
+        <span>Nexus<span class="text-green">AI</span></span>
+      </a>
+
+      <ul class="nav-links">
+        <li><a href="#features" class="nav-link">Platform Features</a></li>
+        <li><a href="#solutions" class="nav-link">AI Engine</a></li>
+        <li><a href="worker/dashboard.html" class="nav-link">For Job Seekers</a></li>
+        <li><a href="employer/dashboard.html" class="nav-link">For Employers</a></li>
+        <li><a href="admin/dashboard.html" class="nav-link">Admin Portal</a></li>
+      </ul>
+
+      <div class="nav-actions">
+        <a href="login.html" class="btn btn-secondary">Sign In</a>
+        <a href="register.html" class="btn btn-primary">Get Started</a>
+        <button class="mobile-nav-toggle" id="mobile-nav-toggle" aria-label="Toggle navigation">
+          &#9776;
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- HERO SECTION -->
+  <section style="padding-top: 140px; padding-bottom: 80px; position: relative;">
+    <div class="container">
+      <div class="grid grid-cols-2 lg:grid-cols-1 gap-8 items-center">
+        <div>
+          <div class="badge badge-green" style="margin-bottom: 1.25rem;">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+            AI Talent Matching 4.0
+          </div>
+          <h1 style="margin-bottom: 1.25rem; font-size: 3rem; line-height: 1.15;">
+            Hire Top 1% Talent with <span class="text-gradient">Autonomous AI</span>
+          </h1>
+          <p style="margin-bottom: 2rem; font-size: 1.125rem; color: var(--text-muted); max-width: 540px;">
+            Eliminate resume screening friction. NexusAI matches candidates with open roles in milliseconds using deep semantic skill vectors and predictive performance scoring.
+          </p>
+
+          <div class="flex gap-4 flex-wrap" style="margin-bottom: 2.5rem;">
+            <a href="employer/dashboard.html" class="btn btn-primary btn-lg">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="8.5" cy="7" r="4"/><line x1="20" y1="8" x2="20" y2="14"/><line x1="23" y1="11" x2="17" y2="11"/></svg>
+              Employer Hiring Hub
+            </a>
+            <a href="worker/dashboard.html" class="btn btn-secondary btn-lg">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+              Candidate Matcher
+            </a>
+          </div>
+
+          <!-- Trust Badges -->
+          <div class="flex items-center gap-6" style="padding-top: 1.5rem; border-top: 1px solid var(--border-color-light);">
+            <div>
+              <div style="font-size: 1.5rem; font-weight: 800; color: var(--accent-green);">98.4%</div>
+              <div style="font-size: 0.75rem; color: var(--text-dim);">AI Match Accuracy</div>
+            </div>
+            <div style="width: 1px; height: 32px; background: var(--border-color-light);"></div>
+            <div>
+              <div style="font-size: 1.5rem; font-weight: 800; color: var(--text-main);">12,400+</div>
+              <div style="font-size: 0.75rem; color: var(--text-dim);">Candidates Indexed</div>
+            </div>
+            <div style="width: 1px; height: 32px; background: var(--border-color-light);"></div>
+            <div>
+              <div style="font-size: 1.5rem; font-weight: 800; color: var(--accent-blue);">&lt; 24 hrs</div>
+              <div style="font-size: 0.75rem; color: var(--text-dim);">Average Time to Hire</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- HERO DEMO CARD (AI Live Match Widget) -->
+        <div>
+          <div class="card card-glass card-accent-top" style="position: relative; box-shadow: var(--shadow-lg);">
+            <div class="card-header">
+              <div class="card-title">
+                <span class="role-dot"></span> Real-time AI Match Engine
+              </div>
+              <span class="badge badge-green">LIVE VERIFIED</span>
+            </div>
+
+            <div class="card-body">
+              <div class="ai-score-ring-container" style="margin-bottom: 1.5rem;">
+                <div class="score-circle" data-score="96">
+                  <span class="score-number">96%</span>
+                </div>
+                <div>
+                  <h4 style="margin-bottom: 0.25rem;">Sr. AI Systems Engineer</h4>
+                  <p style="font-size: 0.875rem; color: var(--text-muted); margin-bottom: 0.5rem;">Top Match: <strong>Sarah Chen</strong></p>
+                  <span class="badge badge-blue">Vectors Aligned: 18 / 18</span>
+                </div>
+              </div>
+
+              <div style="background-color: var(--bg-dark); padding: 1rem; border-radius: var(--radius-md); margin-bottom: 1rem; border: 1px solid var(--border-color-light);">
+                <div style="font-size: 0.75rem; color: var(--text-dim); margin-bottom: 0.5rem; font-weight: 600; text-transform: uppercase;">
+                  Key Matched Competencies
+                </div>
+                <div class="skill-tags">
+                  <span class="skill-chip matched">PyTorch & LLMs</span>
+                  <span class="skill-chip matched">Distributed Training</span>
+                  <span class="skill-chip matched">CUDA Optimization</span>
+                  <span class="skill-chip matched">System Architecture</span>
+                </div>
+              </div>
+
+              <div class="flex items-center justify-between" style="font-size: 0.875rem; color: var(--text-dim);">
+                <span>Screening Status: <strong class="text-green">Automated Pass</strong></span>
+                <span>Latency: <strong>42ms</strong></span>
+              </div>
+            </div>
+
+            <div class="card-footer">
+              <span style="font-size: 0.875rem; color: var(--text-muted);">Explore platform role views:</span>
+              <div class="flex gap-2">
+                <a href="worker/dashboard.html" class="btn btn-sm btn-outline">Worker Portal</a>
+                <a href="employer/dashboard.html" class="btn btn-sm btn-primary">Employer Hub</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ROLE PORTAL QUICK DIRECTORY -->
+  <section style="padding: 60px 0; background-color: var(--bg-surface);">
+    <div class="container">
+      <div style="text-align: center; max-width: 600px; margin: 0 auto 3rem;">
+        <h2>Explore Platform Portal Modules</h2>
+        <p>Switch between candidate, recruiter, and administrator roles to test localized navigation.</p>
+      </div>
+
+      <div class="grid grid-cols-3 md:grid-cols-1 gap-6">
+        <!-- Worker Card -->
+        <div class="card card-interactive" onclick="window.location.href='worker/dashboard.html'">
+          <div style="width: 48px; height: 48px; border-radius: var(--radius-md); background: rgba(16,185,129,0.15); display:flex; align-items:center; justify-content:center; color:var(--accent-green); margin-bottom: 1rem;">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+          </div>
+          <h3 style="margin-bottom: 0.5rem; font-size: 1.25rem;">Candidate / Worker Portal</h3>
+          <p style="font-size: 0.875rem; margin-bottom: 1.25rem;">AI Resume scoring, personalized job match feed, and application status tracker.</p>
+          <a href="worker/dashboard.html" class="btn btn-sm btn-outline btn-block">Launch Candidate Portal &rarr;</a>
+        </div>
+
+        <!-- Employer Card -->
+        <div class="card card-interactive" onclick="window.location.href='employer/dashboard.html'">
+          <div style="width: 48px; height: 48px; border-radius: var(--radius-md); background: rgba(59,130,246,0.15); display:flex; align-items:center; justify-content:center; color:var(--accent-blue); margin-bottom: 1rem;">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+          </div>
+          <h3 style="margin-bottom: 0.5rem; font-size: 1.25rem;">Employer Hiring Hub</h3>
+          <p style="font-size: 0.875rem; margin-bottom: 1.25rem;">Post job requisitions, view AI ranked candidate pipelines, and trigger video screening.</p>
+          <a href="employer/dashboard.html" class="btn btn-sm btn-primary btn-block">Launch Employer Hub &rarr;</a>
+        </div>
+
+        <!-- Admin Card -->
+        <div class="card card-interactive" onclick="window.location.href='admin/dashboard.html'">
+          <div style="width: 48px; height: 48px; border-radius: var(--radius-md); background: rgba(139,92,246,0.15); display:flex; align-items:center; justify-content:center; color:var(--accent-purple); margin-bottom: 1rem;">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+          </div>
+          <h3 style="margin-bottom: 0.5rem; font-size: 1.25rem;">Admin Control Center</h3>
+          <p style="font-size: 0.875rem; margin-bottom: 1.25rem;">System infrastructure health, AI model precision metrics, and user management.</p>
+          <a href="admin/dashboard.html" class="btn btn-sm btn-secondary btn-block">Launch Admin Center &rarr;</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer style="background-color: var(--bg-dark); border-top: 1px solid var(--border-color); padding: 40px 0;">
+    <div class="container">
+      <div class="flex items-center justify-between flex-wrap gap-4">
+        <div class="flex items-center gap-3">
+          <div class="brand-icon" style="width:28px; height:28px; font-size: 0.875rem;">N</div>
+          <span style="font-weight:700; color:var(--text-main);">NexusAI Platform</span>
+          <span class="badge badge-green" style="font-size: 0.7rem;">v1.0 Ready</span>
+        </div>
+        <div style="font-size: 0.875rem; color: var(--text-dim);">
+          &copy; 2026 NexusAI Systems. Enterprise Frontend Foundation.
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Core Scripts -->
+  <script src="js/main.js"></script>
+  <script src="js/dashboard.js"></script>
+</body>
+</html>

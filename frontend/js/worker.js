@@ -389,14 +389,80 @@ async function renderWorkHistoryTimeline() {
   }).join('');
 }
 
+/**
+ * 7. Initialize Worker Profile Form Fields & Submit Handler
+ */
+async function initWorkerProfileForm() {
+  const form = document.getElementById('worker-profile-form');
+  if (!form) return;
+
+  const profile = await getWorkerProfile();
+
+  const nameInput = document.getElementById('profile-name');
+  const locationInput = document.getElementById('profile-location');
+  const occupationInput = document.getElementById('profile-occupation');
+  const expInput = document.getElementById('profile-experience');
+  const languagesInput = document.getElementById('profile-languages');
+  const availInput = document.getElementById('profile-availability');
+  const aboutInput = document.getElementById('profile-about');
+
+  if (nameInput && profile.name) nameInput.value = profile.name;
+  if (locationInput && profile.location) locationInput.value = profile.location;
+  if (occupationInput && profile.occupation) occupationInput.value = profile.occupation;
+  if (expInput && profile.experience) expInput.value = profile.experience;
+  if (languagesInput && profile.languages) {
+    languagesInput.value = Array.isArray(profile.languages) ? profile.languages.join(', ') : profile.languages;
+  }
+  if (availInput && profile.availability) availInput.value = profile.availability;
+  if (aboutInput && profile.about) aboutInput.value = profile.about;
+
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+
+    const submitBtn = form.querySelector('button[type="submit"]');
+    const originalText = submitBtn ? submitBtn.innerHTML : 'Save Profile Changes';
+
+    if (submitBtn) {
+      submitBtn.disabled = true;
+      submitBtn.innerHTML = '<div class="spinner"></div> Saving to Firebase...';
+    }
+
+    const languagesRaw = languagesInput ? languagesInput.value : '';
+    const updated = {
+      name: nameInput ? nameInput.value.trim() : profile.name,
+      location: locationInput ? locationInput.value.trim() : profile.location,
+      occupation: occupationInput ? occupationInput.value.trim() : profile.occupation,
+      experience: expInput ? expInput.value.trim() : profile.experience,
+      languages: languagesRaw ? languagesRaw.split(',').map(s => s.trim()).filter(Boolean) : profile.languages,
+      availability: availInput ? availInput.value.trim() : profile.availability,
+      about: aboutInput ? aboutInput.value.trim() : profile.about
+    };
+
+    await saveWorkerProfileData(updated);
+
+    setTimeout(() => {
+      if (submitBtn) {
+        submitBtn.disabled = false;
+        submitBtn.innerHTML = originalText;
+      }
+
+      if (window.showToast) {
+        window.showToast('Profile updated & synchronized with Firebase Firestore!', 'success');
+      }
+    }, 400);
+  });
+}
+
 // Export functions globally
 window.getWorkHistoryApi = getWorkHistoryApi;
 window.addWorkHistoryApi = addWorkHistoryApi;
 window.getWorkerProfile = getWorkerProfile;
 window.saveWorkerProfileData = saveWorkerProfileData;
+window.initWorkerProfileForm = initWorkerProfileForm;
 
 document.addEventListener('DOMContentLoaded', () => {
   getWorkerProfile();
+  initWorkerProfileForm();
   renderWorkHistoryTimeline();
   loadLiveRecommendedJobs();
 });

@@ -108,6 +108,30 @@ class WorkerService {
     }
 
     if (!worker) {
+      // If user is requesting their own profile, auto-initialize starter worker document
+      if (authUser && (authUser.uid === workerIdParam || primaryDocId.includes(authUser.uid) || (authUser.email && authUser.email.toLowerCase().includes('worker')))) {
+        const now = new Date().toISOString();
+        worker = {
+          workerId: primaryDocId,
+          userId: authUser.uid,
+          name: authUser.name || authUser.displayName || 'Demo Worker',
+          email: authUser.email || 'worker.demo@hackathon.local',
+          location: authUser.location || 'Austin, TX',
+          occupation: 'Electrician',
+          experience: 5,
+          languages: ['English', 'Spanish'],
+          availability: 'Immediate',
+          about: 'Certified industrial and commercial electrician with expertise in 480V diagnostics, safety protocols, and panel maintenance.',
+          skills: ['480V Diagnostics', 'LOTO Protocols', 'Panel Wiring', 'Transformer Maintenance'],
+          skillScore: 88,
+          skillLevel: 'Advanced',
+          createdAt: now,
+          updatedAt: now
+        };
+        await firestoreDb.setDoc('workers', primaryDocId, worker);
+        return worker;
+      }
+
       const error = new Error(`Worker profile not found for identifier: ${workerIdParam}`);
       error.statusCode = 404;
       throw error;

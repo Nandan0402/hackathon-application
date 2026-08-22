@@ -9,6 +9,7 @@ router.use(requireAdmin);
 
 // Platform Analytics
 router.get('/analytics', AdminController.getAnalytics);
+router.get('/dashboard', AdminController.getAnalytics);
 
 // User Management
 router.get('/users', AdminController.getUsers);

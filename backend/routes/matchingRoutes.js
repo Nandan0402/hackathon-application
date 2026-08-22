@@ -8,8 +8,10 @@ router.use(verifyAuth);
 
 // Match candidates for a job query / jobId
 router.post('/', MatchingController.matchJob);
+router.post('/find-candidates', MatchingController.matchJob);
 
 // Get ranked candidates for a specific job posting
 router.get('/jobs/:jobId/candidates', MatchingController.getJobCandidates);
+router.get('/:jobId/candidates', MatchingController.getJobCandidates);
 
 module.exports = router;

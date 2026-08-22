@@ -14,93 +14,19 @@ const EMPLOYER_API_ENDPOINTS = {
   HIRE: '/hire'
 };
 
-// Initial default employer data model
+// Initial default employer data model (starts at ZERO for new employers)
 const DEFAULT_EMPLOYER_DATA = {
-  companyName: "TechCorp Global",
-  recruiterName: "Sarah Jenkins",
+  companyName: "Enterprise Employer",
+  recruiterName: "Recruiter",
   stats: {
-    jobsPosted: 12,
-    activeJobs: 6,
-    candidates: 142,
-    shortlisted: 18,
-    hired: 8
+    jobsPosted: 0,
+    activeJobs: 0,
+    candidates: 0,
+    shortlisted: 0,
+    hired: 0
   },
-  jobs: [
-    {
-      id: "job_1",
-      title: "Senior AI Research Engineer",
-      occupation: "AI & Machine Learning Engineer",
-      location: "San Francisco, CA (Remote)",
-      experience: "5+ Years",
-      skills: ["PyTorch", "Transformers", "CUDA", "Python"],
-      description: "Building autonomous deep learning models and large language model inference clusters.",
-      salary: "$210,000 - $260,000",
-      postedDate: "Aug 18, 2026",
-      status: "Active",
-      matchCount: 38
-    },
-    {
-      id: "job_2",
-      title: "Lead MLOps Infrastructure Architect",
-      occupation: "MLOps & Infrastructure Engineer",
-      location: "New York, NY (Hybrid)",
-      experience: "6+ Years",
-      skills: ["Kubernetes", "MLflow", "CUDA", "Ray"],
-      description: "Architecting enterprise MLOps cluster orchestration pipelines.",
-      salary: "$190,000 - $230,000",
-      postedDate: "Aug 12, 2026",
-      status: "Active",
-      matchCount: 24
-    }
-  ],
-  candidates: [
-    {
-      id: "cand_ravi",
-      name: "Ravi Kumar",
-      occupation: "Electrician & Maintenance Specialist",
-      location: "San Francisco, CA",
-      experience: "8 Years",
-      aiSkillScore: 87,
-      matchScore: 94,
-      skills: ["Wiring", "Troubleshooting", "Maintenance", "Safety"],
-      missingSkills: ["High Voltage AC Certification"],
-      status: "Active",
-      workHistory: [
-        { role: "Senior Maintenance Electrician", company: "Commercial Power Systems", period: "2020 - Present", description: "Lead electrician overseeing industrial wiring and troubleshooting." },
-        { role: "Field Technician", company: "Metro Electrical Corp", period: "2016 - 2020", description: "Handled preventive maintenance and safety inspections." }
-      ]
-    },
-    {
-      id: "cand_1",
-      name: "Alex Rivera",
-      occupation: "Senior AI & Machine Learning Engineer",
-      location: "San Francisco, CA",
-      experience: "5 Years",
-      aiSkillScore: 96,
-      matchScore: 96,
-      skills: ["PyTorch", "Distributed Training", "CUDA", "Python"],
-      missingSkills: ["Ray Train"],
-      status: "Shortlisted",
-      workHistory: [
-        { role: "Lead Machine Learning Engineer", company: "NeuralFlow Systems", period: "2023 - Present", description: "Distributed LLM inference acceleration." }
-      ]
-    },
-    {
-      id: "cand_2",
-      name: "Sarah Chen",
-      occupation: "Sr. AI Research Engineer",
-      location: "Stanford, CA",
-      experience: "6 Years",
-      aiSkillScore: 98,
-      matchScore: 98,
-      skills: ["PyTorch", "LLM Fine-Tuning", "CUDA", "Distributed Systems"],
-      missingSkills: ["Rust Kernel Extensions"],
-      status: "Shortlisted",
-      workHistory: [
-        { role: "AI Research Scientist", company: "Anthropic Labs", period: "2022 - Present", description: "Transformer pre-training research." }
-      ]
-    }
-  ]
+  jobs: [],
+  candidates: []
 };
 
 /**
@@ -108,17 +34,51 @@ const DEFAULT_EMPLOYER_DATA = {
  */
 async function getEmployerData() {
   const token = localStorage.getItem('ai_hiring_auth_token');
-  const baseUrl = window.API_CONFIG ? window.API_CONFIG.BASE_URL : '/api';
+  const baseUrl = window.API_CONFIG ? window.API_CONFIG.BASE_URL : 'http://localhost:5000/api';
 
-  try {
-    const res = await fetch(`${baseUrl}${EMPLOYER_API_ENDPOINTS.DASHBOARD}`, {
-      headers: { 'Authorization': `Bearer ${token}` }
-    });
-    if (res.ok) {
-      return await res.json();
+  if (token) {
+    try {
+      const [jobsRes, appsRes] = await Promise.all([
+        fetch(`${baseUrl}${EMPLOYER_API_ENDPOINTS.DASHBOARD}`, {
+          headers: { 'Authorization': `Bearer ${token}` }
+        }),
+        fetch(`${baseUrl}/applications`, {
+          headers: { 'Authorization': `Bearer ${token}` }
+        }).catch(() => null)
+      ]);
+
+      if (jobsRes.ok) {
+        const jobsData = await jobsRes.json();
+        const rawJobs = jobsData.data?.jobs || jobsData.data || jobsData.jobs || [];
+
+        let rawApps = [];
+        if (appsRes && appsRes.ok) {
+          const appsData = await appsRes.json();
+          rawApps = appsData.data?.applications || appsData.data || [];
+        }
+
+        const employerJobs = Array.isArray(rawJobs) ? rawJobs : [];
+        const activeJobsCount = employerJobs.filter(j => (j.status || '').toLowerCase() === 'active').length;
+        const shortlistedCount = rawApps.filter(a => (a.status || '').toUpperCase() === 'SHORTLISTED').length;
+        const hiredCount = rawApps.filter(a => (a.status || '').toUpperCase() === 'HIRED').length;
+
+        return {
+          companyName: "Enterprise Employer",
+          recruiterName: "Recruiter",
+          stats: {
+            jobsPosted: employerJobs.length,
+            activeJobs: activeJobsCount,
+            candidates: rawApps.length,
+            shortlisted: shortlistedCount,
+            hired: hiredCount
+          },
+          jobs: employerJobs,
+          candidates: rawApps
+        };
+      }
+    } catch (e) {
+      console.warn('[Employer Engine] API endpoint unreachable. Reading persistent local employer store.');
     }
-  } catch (e) {
-    console.warn('[Employer Engine] API endpoint unreachable. Using persistent local employer store.');
   }
 
   const stored = localStorage.getItem('nexus_employer_data');
@@ -130,7 +90,6 @@ async function getEmployerData() {
     }
   }
 
-  localStorage.setItem('nexus_employer_data', JSON.stringify(DEFAULT_EMPLOYER_DATA));
   return DEFAULT_EMPLOYER_DATA;
 }
 
@@ -325,21 +284,68 @@ window.hireWorkerApi = hireWorkerApi;
 window.updateCandidateStatus = updateLocalCandidateStatus;
 
 /**
- * Render Dashboard Stats
+ * Render Dashboard Stats & Active Requisitions
  */
 async function renderEmployerDashboard() {
-  const data = await getEmployerData();
+  const container = document.getElementById('active-jobs-container');
 
-  const setStat = (id, val) => {
-    const el = document.getElementById(id);
-    if (el) el.textContent = val !== undefined ? val : '0';
-  };
+  try {
+    const data = await getEmployerData();
 
-  setStat('stat-jobs-posted', data.stats.jobsPosted);
-  setStat('stat-active-jobs', data.stats.activeJobs);
-  setStat('stat-candidates', data.stats.candidates);
-  setStat('stat-shortlisted', data.stats.shortlisted);
-  setStat('stat-hired', data.stats.hired);
+    const setStat = (id, val) => {
+      const el = document.getElementById(id);
+      if (el) el.textContent = val !== undefined ? val : '0';
+    };
+
+    // Update 5 Metric Cards
+    setStat('stat-jobs-posted', data.stats.jobsPosted);
+    setStat('stat-active-jobs', data.stats.activeJobs);
+    setStat('stat-candidates', data.stats.candidates);
+    setStat('stat-shortlisted', data.stats.shortlisted);
+    setStat('stat-hired', data.stats.hired);
+
+    // Update Candidate Pipeline Badges
+    setStat('pipeline-candidates-count', data.stats.candidates);
+    setStat('pipeline-shortlisted-count', data.stats.shortlisted);
+    setStat('pipeline-hired-count', data.stats.hired);
+
+    // Render Active Job Requisitions List
+    if (container) {
+      if (!data.jobs || data.jobs.length === 0) {
+        container.innerHTML = `
+          <div style="text-align: center; padding: 2.5rem 1rem; color: var(--text-muted);">
+            <p style="font-size: 1rem; margin-bottom: 1rem; color: var(--text-main);">No active job requisitions yet.</p>
+            <a href="create-job.html" class="btn btn-primary">+ Create Job</a>
+          </div>
+        `;
+      } else {
+        container.innerHTML = data.jobs.map(job => `
+          <div class="job-item-card" style="padding: 1rem; background: var(--bg-dark); border-radius: var(--radius-md); border: 1px solid var(--border-color-light); margin-bottom: 1rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;">
+            <div>
+              <div class="flex items-center gap-3" style="margin-bottom: 0.25rem;">
+                <h4 style="font-size: 1.1rem; color: var(--text-main); font-weight: 700;">${job.title}</h4>
+                <span class="badge badge-green">${job.matchCount || 0} Candidates Matched</span>
+              </div>
+              <p style="font-size: 0.875rem; color: var(--text-muted);">
+                ${job.occupation || 'Trade Position'} &bull; ${job.location || 'Location specified'} &bull; ${job.salary || job.salaryRange || 'Competitive'}
+              </p>
+            </div>
+            <a href="candidates.html" class="btn btn-secondary btn-sm">Review Matches &rarr;</a>
+          </div>
+        `).join('');
+      }
+    }
+  } catch (err) {
+    console.error('Employer dashboard render error:', err);
+    if (container) {
+      container.innerHTML = `
+        <div class="alert alert-danger" style="display: flex; align-items: center; justify-content: space-between; gap: 1rem; margin: 1rem 0;">
+          <span>Unable to load dashboard data. Please try again.</span>
+          <button onclick="renderEmployerDashboard()" class="btn btn-sm btn-outline">Retry</button>
+        </div>
+      `;
+    }
+  }
 }
 
 document.addEventListener('DOMContentLoaded', () => {

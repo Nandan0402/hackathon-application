@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Dashboard | NexusAI Platform</title>
+
+  <link rel="stylesheet" href="../css/variables.css">
+  <link rel="stylesheet" href="../css/main.css">
+  <link rel="stylesheet" href="../css/components.css">
+  <link rel="stylesheet" href="../css/navigation.css">
+  <link rel="stylesheet" href="../css/dashboard.css">
+</head>
+<body data-auth-required="admin">
+  <div class="app-layout">
+
+    <!-- SIDEBAR NAVIGATION -->
+    <aside class="sidebar">
+      <div class="sidebar-header">
+        <a href="../index.html" class="sidebar-brand">
+          <div class="brand-icon">N</div>
+          <span>Nexus<span class="text-green">AI</span></span>
+        </a>
+        <button class="sidebar-toggle-btn" id="sidebar-toggle">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><line x1="9" y1="3" x2="9" y2="21"/></svg>
+        </button>
+      </div>
+
+      <div class="sidebar-role-badge">
+        <span class="role-dot" style="background-color: var(--accent-purple); box-shadow: 0 0 8px var(--accent-purple);"></span>
+        <span>ADMIN CONTROL</span>
+      </div>
+
+      <!-- SIDEBAR ITEMS REQUIRED: Dashboard, Workers, Employers, Jobs, Applications, Analytics -->
+      <ul class="sidebar-menu">
+        <li class="sidebar-item">
+          <a href="dashboard.html" class="sidebar-link active">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+            <span>Dashboard</span>
+          </a>
+        </li>
+        <li class="sidebar-item">
+          <a href="#workers" class="sidebar-link" onclick="window.showToast('Filter: Showing all 12,480 registered Workers', 'info'); return false;">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+            <span>Workers</span>
+          </a>
+        </li>
+        <li class="sidebar-item">
+          <a href="#employers" class="sidebar-link" onclick="window.showToast('Filter: Showing 412 active Employers', 'info'); return false;">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>
+            <span>Employers</span>
+          </a>
+        </li>
+        <li class="sidebar-item">
+          <a href="#jobs" class="sidebar-link" onclick="window.showToast('Filter: Showing 850 total Job Requisitions', 'info'); return false;">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+            <span>Jobs</span>
+          </a>
+        </li>
+        <li class="sidebar-item">
+          <a href="#applications" class="sidebar-link" onclick="window.showToast('Filter: Showing 3,420 Applications submitted', 'info'); return false;">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+            <span>Applications</span>
+          </a>
+        </li>
+        <li class="sidebar-item">
+          <a href="#analytics" class="sidebar-link" onclick="window.showToast('AI Model Vector precision rating: 98.4%', 'success'); return false;">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+            <span>Analytics</span>
+          </a>
+        </li>
+
+        <li class="sidebar-item" style="margin-top: auto;">
+          <a href="../login.html" class="sidebar-link" data-action="logout" style="color: var(--status-danger);">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+            <span>Sign Out</span>
+          </a>
+        </li>
+      </ul>
+
+      <div class="sidebar-footer">
+        <div class="user-profile-bar">
+          <div class="avatar" style="background: var(--accent-purple);">SA</div>
+          <div class="user-info">
+            <span class="user-name">System Admin</span>
+            <span class="user-role-title">Superuser</span>
+          </div>
+        </div>
+      </div>
+    </aside>
+
+    <main class="main-content">
+      <header class="topbar">
+        <h4 style="color: var(--text-main);">Lightweight Platform Overview</h4>
+        <div class="flex items-center gap-3">
+          <span class="badge badge-green">REAL BACKEND DATA</span>
+          <div class="avatar" style="background: var(--accent-purple);">SA</div>
+        </div>
+      </header>
+
+      <div class="page-wrapper">
+        <div class="dashboard-header">
+          <div>
+            <h1 class="dashboard-title">
+              Admin Overview
+            </h1>
+            <p class="dashboard-subtitle">High-level platform metrics aggregated from backend API endpoints.</p>
+          </div>
+        </div>
+
+        <!-- DASHBOARD CARDS REQUIRED: Total Workers, Total Employers, Total Jobs, Applications, Hires, Active Jobs -->
+        <div class="metrics-grid" style="grid-template-columns: repeat(3, minmax(220px, 1fr));">
+          
+          <!-- 1. Total Workers -->
+          <div class="metric-card">
+            <div class="metric-info">
+              <span class="metric-label">Total Workers</span>
+              <span id="admin-stat-workers" class="metric-value text-green">12,480</span>
+              <span class="metric-change positive">Registered Candidate Accounts</span>
+            </div>
+            <div class="metric-icon-box">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+            </div>
+          </div>
+
+          <!-- 2. Total Employers -->
+          <div class="metric-card">
+            <div class="metric-info">
+              <span class="metric-label">Total Employers</span>
+              <span id="admin-stat-employers" class="metric-value">412</span>
+              <span class="metric-change positive">Enterprise Recruiter Accounts</span>
+            </div>
+            <div class="metric-icon-box">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>
+            </div>
+          </div>
+
+          <!-- 3. Total Jobs -->
+          <div class="metric-card">
+            <div class="metric-info">
+              <span class="metric-label">Total Jobs</span>
+              <span id="admin-stat-jobs" class="metric-value">850</span>
+              <span class="metric-change positive">All Created Requisitions</span>
+            </div>
+            <div class="metric-icon-box">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+            </div>
+          </div>
+
+          <!-- 4. Applications -->
+          <div class="metric-card">
+            <div class="metric-info">
+              <span class="metric-label">Applications</span>
+              <span id="admin-stat-applications" class="metric-value" style="color: #60a5fa;">3,420</span>
+              <span class="metric-change positive">Total Submitted Applications</span>
+            </div>
+            <div class="metric-icon-box">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+            </div>
+          </div>
+
+          <!-- 5. Hires -->
+          <div class="metric-card">
+            <div class="metric-info">
+              <span class="metric-label">Hires</span>
+              <span id="admin-stat-hires" class="metric-value text-green">184</span>
+              <span class="metric-change positive">Successful Placements</span>
+            </div>
+            <div class="metric-icon-box">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+            </div>
+          </div>
+
+          <!-- 6. Active Jobs -->
+          <div class="metric-card">
+            <div class="metric-info">
+              <span class="metric-label">Active Jobs</span>
+              <span id="admin-stat-active-jobs" class="metric-value text-green">142</span>
+              <span class="metric-change positive">Currently Hiring</span>
+            </div>
+            <div class="metric-icon-box">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </main>
+  </div>
+
+  <script src="../js/main.js"></script>
+  <script src="../js/auth.js"></script>
+  <script src="../js/admin.js"></script>
+</body>
+</html>

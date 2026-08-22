@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Work History Timeline | NexusAI Worker</title>
+
+  <link rel="stylesheet" href="../css/variables.css">
+  <link rel="stylesheet" href="../css/main.css">
+  <link rel="stylesheet" href="../css/components.css">
+  <link rel="stylesheet" href="../css/navigation.css">
+  <link rel="stylesheet" href="../css/dashboard.css">
+</head>
+<body data-auth-required="worker">
+  <div class="app-layout">
+
+    <aside class="sidebar">
+      <div class="sidebar-header">
+        <a href="../index.html" class="sidebar-brand">
+          <div class="brand-icon">N</div>
+          <span>Nexus<span class="text-green">AI</span></span>
+        </a>
+        <button class="sidebar-toggle-btn" id="sidebar-toggle">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><line x1="9" y1="3" x2="9" y2="21"/></svg>
+        </button>
+      </div>
+
+      <div class="sidebar-role-badge">
+        <span class="role-dot"></span>
+        <span>WORKER PORTAL</span>
+      </div>
+
+      <ul class="sidebar-menu">
+        <li class="sidebar-item">
+          <a href="dashboard.html" class="sidebar-link">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+            <span>Worker Dashboard</span>
+          </a>
+        </li>
+        <li class="sidebar-item">
+          <a href="profile.html" class="sidebar-link">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+            <span>My Profile</span>
+          </a>
+        </li>
+        <li class="sidebar-item">
+          <a href="assessment.html" class="sidebar-link">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+            <span>AI Skill Assessment</span>
+          </a>
+        </li>
+        <li class="sidebar-item">
+          <a href="skill-passport.html" class="sidebar-link">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M12 8v8"/><path d="M8 12h8"/></svg>
+            <span>AI Skill Passport</span>
+          </a>
+        </li>
+        <li class="sidebar-item">
+          <a href="jobs.html" class="sidebar-link">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>
+            <span>Recommended Jobs</span>
+          </a>
+        </li>
+        <li class="sidebar-item">
+          <a href="applications.html" class="sidebar-link">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+            <span>My Applications</span>
+          </a>
+        </li>
+        <li class="sidebar-item">
+          <a href="work-history.html" class="sidebar-link active">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+            <span>Work History</span>
+          </a>
+        </li>
+        <li class="sidebar-item" style="margin-top: auto;">
+          <a href="../login.html" class="sidebar-link" data-action="logout" style="color: var(--status-danger);">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+            <span>Sign Out</span>
+          </a>
+        </li>
+      </ul>
+
+      <div class="sidebar-footer">
+        <div class="user-profile-bar">
+          <div class="avatar">AR</div>
+          <div class="user-info">
+            <span class="user-name worker-name-bind">Alex Rivera</span>
+            <span class="user-role-title worker-occupation-bind">AI & ML Engineer</span>
+          </div>
+        </div>
+      </div>
+    </aside>
+
+    <main class="main-content">
+      <header class="topbar">
+        <h4 style="color: var(--text-main);">Worker Employment Records</h4>
+        <button class="btn btn-primary btn-sm" data-modal-target="add-exp-modal">+ Add Experience</button>
+      </header>
+
+      <div class="page-wrapper" style="max-width: 900px; margin: 0 auto;">
+        
+        <div class="dashboard-header" style="margin-bottom: 2rem;">
+          <div>
+            <h1 class="dashboard-title">
+              Work History
+            </h1>
+            <p class="dashboard-subtitle">Chronological timeline showing career growth, verified skills used, and employer ratings over time.</p>
+          </div>
+          <span class="badge badge-green">CONNECTED TO WORK HISTORY API</span>
+        </div>
+
+        <!-- TIMELINE CONTAINER -->
+        <div id="work-history-timeline-container" style="position: relative;">
+          <!-- Dynamically populated by worker.js from Work History API -->
+        </div>
+
+      </div>
+    </main>
+  </div>
+
+  <!-- ADD WORK EXPERIENCE MODAL FORM -->
+  <div id="add-exp-modal" class="modal-backdrop">
+    <div class="modal card-accent-top">
+      <div class="modal-header">
+        <h3 class="card-title">Add Work Experience Record</h3>
+        <button class="alert-close" data-modal-close>&times;</button>
+      </div>
+      <form id="add-work-history-form">
+        <div class="modal-body">
+          <div class="form-group">
+            <label class="form-label" for="wh-company">Company Name</label>
+            <input type="text" id="wh-company" class="form-control" placeholder="e.g. Commercial Power Systems" required>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="wh-role">Role Title</label>
+            <input type="text" id="wh-role" class="form-control" placeholder="e.g. Senior Maintenance Electrician" required>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="wh-duration">Duration</label>
+            <input type="text" id="wh-duration" class="form-control" placeholder="e.g. 2024 - Present (2 Years)" required>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="wh-skills">Skills Used (Comma separated)</label>
+            <input type="text" id="wh-skills" class="form-control" placeholder="Wiring, Troubleshooting, Maintenance, Safety" required>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="wh-rating">Employer Rating</label>
+            <select id="wh-rating" class="form-control">
+              <option value="5.0 / 5.0 ★★★★★">5.0 / 5.0 ★★★★★ (Verified Excellent)</option>
+              <option value="4.8 / 5.0 ★★★★☆">4.8 / 5.0 ★★★★☆ (Verified Great)</option>
+              <option value="4.5 / 5.0 ★★★★☆">4.5 / 5.0 ★★★★☆ (Verified Good)</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="wh-desc">Achievements & Responsibilities</label>
+            <textarea id="wh-desc" class="form-control" rows="3" placeholder="Describe key projects, safety compliance, and troubleshooting impact..." required></textarea>
+          </div>
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-modal-close>Cancel</button>
+          <button type="submit" class="btn btn-primary">Add Record to Timeline →</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script src="../js/main.js"></script>
+  <script src="../js/auth.js"></script>
+  <script src="../js/worker.js"></script>
+  <script>
+    document.getElementById('add-work-history-form').addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      const company = document.getElementById('wh-company').value.trim();
+      const role = document.getElementById('wh-role').value.trim();
+      const duration = document.getElementById('wh-duration').value.trim();
+      const skillsUsed = document.getElementById('wh-skills').value.trim();
+      const employerRating = document.getElementById('wh-rating').value;
+      const description = document.getElementById('wh-desc').value.trim();
+
+      const submitBtn = e.target.querySelector('button[type="submit"]');
+      submitBtn.disabled = true;
+      submitBtn.innerHTML = `<div class="spinner"></div> Submitting to Work History API...`;
+
+      const result = await window.addWorkHistoryApi({
+        company, role, duration, skillsUsed, employerRating, description
+      });
+
+      setTimeout(() => {
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'Add Record to Timeline →';
+        
+        if (window.closeModal) window.closeModal('add-exp-modal');
+        e.target.reset();
+
+        if (window.showToast) {
+          window.showToast(`Employment record for "${company}" added to your timeline!`, 'success');
+        }
+
+        // Re-render timeline dynamically
+        window.location.reload();
+      }, 600);
+    });
+  </script>
+</body>
+</html>

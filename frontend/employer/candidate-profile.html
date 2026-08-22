@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Candidate Profile & Hiring | NexusAI Employer</title>
+
+  <link rel="stylesheet" href="../css/variables.css">
+  <link rel="stylesheet" href="../css/main.css">
+  <link rel="stylesheet" href="../css/components.css">
+  <link rel="stylesheet" href="../css/navigation.css">
+  <link rel="stylesheet" href="../css/dashboard.css">
+</head>
+<body data-auth-required="employer">
+  <div class="app-layout">
+
+    <aside class="sidebar">
+      <div class="sidebar-header">
+        <a href="../index.html" class="sidebar-brand">
+          <div class="brand-icon">N</div>
+          <span>Nexus<span class="text-green">AI</span></span>
+        </a>
+        <button class="sidebar-toggle-btn" id="sidebar-toggle">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><line x1="9" y1="3" x2="9" y2="21"/></svg>
+        </button>
+      </div>
+
+      <div class="sidebar-role-badge">
+        <span class="role-dot" style="background-color: var(--accent-blue); box-shadow: 0 0 8px var(--accent-blue);"></span>
+        <span>EMPLOYER PORTAL</span>
+      </div>
+
+      <ul class="sidebar-menu">
+        <li class="sidebar-item">
+          <a href="dashboard.html" class="sidebar-link">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>
+            <span>Employer Dashboard</span>
+          </a>
+        </li>
+        <li class="sidebar-item">
+          <a href="create-job.html" class="sidebar-link">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+            <span>Create New Job</span>
+          </a>
+        </li>
+        <li class="sidebar-item">
+          <a href="candidates.html" class="sidebar-link active">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+            <span>AI Candidate Matching</span>
+          </a>
+        </li>
+        <li class="sidebar-item">
+          <a href="shortlisted.html" class="sidebar-link">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+            <span>Shortlisted Candidates</span>
+          </a>
+        </li>
+        <li class="sidebar-item">
+          <a href="hired.html" class="sidebar-link">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+            <span>Hired Candidates</span>
+          </a>
+        </li>
+        <li class="sidebar-item" style="margin-top: auto;">
+          <a href="../login.html" class="sidebar-link" data-action="logout" style="color: var(--status-danger);">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+            <span>Sign Out</span>
+          </a>
+        </li>
+      </ul>
+
+      <div class="sidebar-footer">
+        <div class="user-profile-bar">
+          <div class="avatar" style="background: var(--accent-blue);">TC</div>
+          <div class="user-info">
+            <span class="user-name">TechCorp Recruiter</span>
+            <span class="user-role-title">Enterprise Employer</span>
+          </div>
+        </div>
+      </div>
+    </aside>
+
+    <main class="main-content">
+      <header class="topbar">
+        <h4 style="color: var(--text-main);">Candidate Vector Profile & Hiring Interface</h4>
+        <a href="candidates.html" class="btn btn-secondary btn-sm">&larr; Back to Candidates</a>
+      </header>
+
+      <div class="page-wrapper" style="max-width: 960px; margin: 0 auto;">
+        
+        <!-- CANDIDATE PROFILE HEADER CARD -->
+        <div class="card card-accent-top" style="margin-bottom: 2rem; box-shadow: var(--shadow-lg);">
+          
+          <div class="card-header" style="padding-bottom: 1rem;">
+            <div class="flex items-center gap-5 flex-wrap">
+              <div class="avatar" style="width: 72px; height: 72px; font-size: 1.75rem; font-weight: 700; background: linear-gradient(135deg, var(--accent-green) 0%, var(--accent-blue) 100%);">
+                RK
+              </div>
+              <div>
+                <!-- WORKER INFORMATION -->
+                <h1 id="cand-name" style="font-size: 2rem; font-weight: 800; color: var(--text-main); margin-bottom: 0.2rem;">
+                  Ravi Kumar
+                </h1>
+                <p id="cand-occupation" style="font-size: 1.1rem; color: var(--accent-green-light); font-weight: 600;">
+                  Electrician & Maintenance Specialist
+                </p>
+                <div style="font-size: 0.875rem; color: var(--text-muted); margin-top: 0.4rem;" class="flex items-center gap-4 flex-wrap">
+                  <span>Location: <strong id="cand-location" style="color: var(--text-main);">San Francisco, CA</strong></span>
+                  <span>&bull;</span>
+                  <span>Experience: <strong id="cand-experience" style="color: var(--text-main);">8 Years</strong></span>
+                </div>
+              </div>
+            </div>
+
+            <div class="flex flex-col items-end gap-2">
+              <!-- AI MATCH SCORE -->
+              <span id="cand-match-badge" class="badge ai-match-badge" style="font-size: 1rem; padding: 0.5rem 1rem;">
+                AI Match Score: 94%
+              </span>
+              <span id="candidate-status-badge" class="badge badge-blue">
+                STATUS: ACTIVE CANDIDATE
+              </span>
+            </div>
+          </div>
+
+          <div class="card-body">
+            
+            <!-- METRICS ROW: AI SKILL SCORE & EXPERIENCE -->
+            <div class="grid grid-cols-2 md:grid-cols-1 gap-6" style="margin-bottom: 2rem; padding: 1.25rem; background: var(--bg-dark); border-radius: var(--radius-lg); border: 1px solid var(--border-color-light);">
+              <!-- AI SKILL SCORE -->
+              <div>
+                <span style="font-size: 0.75rem; color: var(--text-dim); text-transform: uppercase; font-weight: 700; display: block; margin-bottom: 0.25rem;">
+                  AI Skill Score
+                </span>
+                <div id="cand-skill-score" style="font-size: 2rem; font-weight: 800; color: var(--accent-green);">
+                  87/100
+                </div>
+                <span style="font-size: 0.8rem; color: var(--text-muted);">Verified Advanced Rating</span>
+              </div>
+
+              <!-- AI MATCH SCORE -->
+              <div>
+                <span style="font-size: 0.75rem; color: var(--text-dim); text-transform: uppercase; font-weight: 700; display: block; margin-bottom: 0.25rem;">
+                  AI Requisition Vector Overlap
+                </span>
+                <div id="cand-match-score" style="font-size: 2rem; font-weight: 800; color: #60a5fa;">
+                  94% Overlap
+                </div>
+                <span style="font-size: 0.8rem; color: var(--text-muted);">Optimal Technical Match</span>
+              </div>
+            </div>
+
+            <!-- SKILL PASSPORT CONTAINER -->
+            <div style="margin-bottom: 2rem; padding: 1.25rem; background: rgba(16, 185, 129, 0.06); border-radius: var(--radius-lg); border: 1px solid rgba(16, 185, 129, 0.25);">
+              <div class="flex justify-between items-center flex-wrap gap-3" style="margin-bottom: 0.75rem;">
+                <div class="flex items-center gap-2">
+                  <div class="brand-icon" style="width:28px; height:28px; font-size:0.8rem;">N</div>
+                  <strong style="font-size: 1rem; color: var(--text-main);">Digital Skill Passport Credentials</strong>
+                </div>
+                <span class="badge badge-green">✓ VERIFIED AUTONOMOUS CREDENTIAL</span>
+              </div>
+
+              <div style="font-size: 0.8rem; color: var(--text-dim); margin-bottom: 0.75rem;">
+                Cryptographic Vector Hash: <code style="color: var(--accent-green-light);">NEXUS-PASSPORT-0x89A3B2F7E41C</code> &bull; Status: <strong class="text-green">Active & Authenticated</strong>
+              </div>
+
+              <a href="../worker/skill-passport.html" target="_blank" class="btn btn-outline btn-sm">
+                View Passport Details & Digital Badges &rarr;
+              </a>
+            </div>
+
+            <!-- SKILLS MATRIX -->
+            <div style="margin-bottom: 2rem;">
+              <h3 style="font-size: 1rem; color: var(--text-main); margin-bottom: 0.75rem;">Skill Competency Analysis</h3>
+              
+              <div style="margin-bottom: 1rem;">
+                <span style="font-size: 0.75rem; color: var(--text-dim); text-transform: uppercase; font-weight: 700; display: block; margin-bottom: 0.35rem;">Matched Skills</span>
+                <div id="cand-matched-skills" class="skill-tags">
+                  <span class="skill-chip matched">✓ Wiring (94%)</span>
+                  <span class="skill-chip matched">✓ Troubleshooting (96%)</span>
+                  <span class="skill-chip matched">✓ Maintenance (90%)</span>
+                  <span class="skill-chip matched">✓ Safety (98%)</span>
+                </div>
+              </div>
+
+              <div>
+                <span style="font-size: 0.75rem; color: var(--text-dim); text-transform: uppercase; font-weight: 700; display: block; margin-bottom: 0.35rem;">Missing / Additional Skills</span>
+                <div id="cand-missing-skills" class="skill-tags">
+                  <span class="skill-chip" style="border-color: rgba(239,68,68,0.3); color: #f87171; background: rgba(239,68,68,0.08);">
+                    ✗ High Voltage AC Certification
+                  </span>
+                </div>
+              </div>
+            </div>
+
+            <!-- WORK HISTORY TIMELINE -->
+            <div style="margin-bottom: 2rem;">
+              <h3 style="font-size: 1rem; color: var(--text-main); margin-bottom: 0.75rem;">Work History Timeline</h3>
+              <div id="cand-work-history">
+                <div style="padding: 1rem; background: var(--bg-dark); border-radius: var(--radius-md); border: 1px solid var(--border-color-light); margin-bottom: 0.75rem;">
+                  <div class="flex justify-between items-center" style="margin-bottom: 0.25rem;">
+                    <strong style="color: var(--text-main);">Senior Maintenance Electrician</strong>
+                    <span class="badge badge-green">Verified Experience</span>
+                  </div>
+                  <div style="font-size: 0.85rem; color: var(--text-muted);">Commercial Power Systems &bull; 2020 - Present (4 Yrs)</div>
+                  <p style="font-size: 0.825rem; color: var(--text-dim); margin-top: 0.35rem;">Lead electrician overseeing commercial industrial wiring, preventative maintenance, and troubleshooting.</p>
+                </div>
+
+                <div style="padding: 1rem; background: var(--bg-dark); border-radius: var(--radius-md); border: 1px solid var(--border-color-light);">
+                  <div class="flex justify-between items-center" style="margin-bottom: 0.25rem;">
+                    <strong style="color: var(--text-main);">Field Electrical Technician</strong>
+                    <span class="badge badge-green">Verified Experience</span>
+                  </div>
+                  <div style="font-size: 0.85rem; color: var(--text-muted);">Metro Electrical Corp &bull; 2016 - 2020 (4 Yrs)</div>
+                  <p style="font-size: 0.825rem; color: var(--text-dim); margin-top: 0.35rem;">Handled emergency system troubleshooting, circuit diagnostics, and safety audits.</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- ACTION BUTTONS BAR: [Shortlist] [Reject] [Hire Worker] -->
+            <div class="flex justify-between items-center flex-wrap gap-4" style="border-top: 1px solid var(--border-color); padding-top: 1.5rem;">
+              <button id="reject-btn" class="btn btn-danger">
+                [Reject]
+              </button>
+
+              <div class="flex gap-3">
+                <button id="shortlist-btn" class="btn btn-secondary">
+                  [Shortlist]
+                </button>
+                
+                <button id="hire-worker-btn" class="btn btn-primary btn-lg" style="box-shadow: 0 0 20px rgba(16, 185, 129, 0.4);">
+                  [Hire Worker]
+                </button>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <!-- HIRE CONFIRMATION MODAL DIALOG -->
+  <div id="hire-confirmation-modal" class="modal-backdrop">
+    <div class="modal card-accent-top">
+      <div class="modal-header">
+        <h3 class="card-title text-green">Confirm Hire Action</h3>
+        <button class="alert-close" data-modal-close>&times;</button>
+      </div>
+      <div class="modal-body">
+        <p style="font-size: 1rem; color: var(--text-main); margin-bottom: 1rem;">
+          Are you sure you want to extend an official offer and hire <strong id="modal-candidate-name">Ravi Kumar</strong> for the position of <strong>Senior Requisition Specialist</strong>?
+        </p>
+
+        <div class="alert alert-info" style="margin-bottom: 1rem;">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#3b82f6" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+          <div>
+            This action will call the backend hire confirmation API (`POST /api/employer/hire`) and update the candidate's status to <strong>HIRED</strong>.
+          </div>
+        </div>
+
+        <div id="modal-hire-error" class="alert alert-danger" style="display: none;">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#ef4444" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg>
+          <span id="modal-hire-error-text">Backend hire confirmation failed.</span>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-modal-close>Cancel</button>
+        <button type="button" id="confirm-hire-submit-btn" class="btn btn-primary">
+          Confirm & Hire Candidate
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <script src="../js/main.js"></script>
+  <script src="../js/auth.js"></script>
+  <script src="../js/employer.js"></script>
+  <script>
+    // Handle URL parameters to dynamic candidate data
+    const urlParams = new URLSearchParams(window.location.search);
+    const candidateId = urlParams.get('id') || 'cand_ravi';
+
+    document.addEventListener('DOMContentLoaded', async () => {
+      const employerData = await window.getEmployerData();
+      const candidate = employerData.candidates.find(c => c.id === candidateId) || employerData.candidates[0];
+
+      if (candidate) {
+        document.getElementById('cand-name').textContent = candidate.name;
+        document.getElementById('modal-candidate-name').textContent = candidate.name;
+        document.getElementById('cand-occupation').textContent = candidate.occupation;
+        document.getElementById('cand-location').textContent = candidate.location || 'San Francisco, CA';
+        document.getElementById('cand-experience').textContent = candidate.experience || '8 Years';
+        
+        document.getElementById('cand-match-badge').textContent = `AI Match Score: ${candidate.matchScore || 94}%`;
+        document.getElementById('cand-match-score').textContent = `${candidate.matchScore || 94}% Overlap`;
+        document.getElementById('cand-skill-score').textContent = `${candidate.aiSkillScore || 87}/100`;
+
+        if (candidate.status === 'HIRED') {
+          const badge = document.getElementById('candidate-status-badge');
+          badge.textContent = 'STATUS: HIRED';
+          badge.className = 'badge badge-green';
+        } else if (candidate.status === 'Shortlisted') {
+          const badge = document.getElementById('candidate-status-badge');
+          badge.textContent = 'STATUS: SHORTLISTED';
+          badge.className = 'badge badge-blue';
+        }
+      }
+
+      // Event Listener for Shortlist Button
+      document.getElementById('shortlist-btn').addEventListener('click', async () => {
+        const res = await window.shortlistCandidateApi(candidateId);
+        if (res.success) {
+          const badge = document.getElementById('candidate-status-badge');
+          badge.textContent = 'STATUS: SHORTLISTED';
+          badge.className = 'badge badge-blue';
+          if (window.showToast) window.showToast(`${candidate.name} shortlisted!`, 'success');
+        }
+      });
+
+      // Event Listener for Reject Button
+      document.getElementById('reject-btn').addEventListener('click', async () => {
+        if (confirm(`Are you sure you want to reject ${candidate.name}?`)) {
+          const res = await window.rejectCandidateApi(candidateId);
+          if (res.success) {
+            const badge = document.getElementById('candidate-status-badge');
+            badge.textContent = 'STATUS: REJECTED';
+            badge.className = 'badge badge-danger';
+            if (window.showToast) window.showToast(`${candidate.name} candidate status set to Rejected.`, 'info');
+          }
+        }
+      });
+
+      // Event Listener to Open Hire Modal
+      document.getElementById('hire-worker-btn').addEventListener('click', () => {
+        if (window.openModal) window.openModal('hire-confirmation-modal');
+      });
+
+      // Confirm Hire Action Submit Handler
+      document.getElementById('confirm-hire-submit-btn').addEventListener('click', async () => {
+        const btn = document.getElementById('confirm-hire-submit-btn');
+        const errAlert = document.getElementById('modal-hire-error');
+        errAlert.style.display = 'none';
+
+        btn.disabled = true;
+        btn.innerHTML = `<div class="spinner"></div> Executing Hire API...`;
+
+        // CALL BACKEND HIRE API (Waits for response before showing success)
+        const response = await window.hireWorkerApi(candidateId, 'job_1');
+
+        if (response && response.success) {
+          // UPDATE CANDIDATE STATUS TO HIRED
+          const badge = document.getElementById('candidate-status-badge');
+          if (badge) {
+            badge.textContent = 'STATUS: HIRED';
+            badge.className = 'badge badge-green';
+          }
+
+          if (window.closeModal) window.closeModal('hire-confirmation-modal');
+
+          if (window.showToast) {
+            window.showToast(`CONFIRMED! ${candidate.name} has been successfully hired.`, 'success');
+          }
+        } else {
+          btn.disabled = false;
+          btn.textContent = 'Confirm & Hire Candidate';
+          
+          if (errAlert) {
+            document.getElementById('modal-hire-error-text').textContent = response.message || 'Backend hire confirmation failed.';
+            errAlert.style.display = 'flex';
+          }
+        }
+      });
+    });
+  </script>
+</body>
+</html>

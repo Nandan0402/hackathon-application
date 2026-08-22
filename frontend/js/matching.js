@@ -100,7 +100,7 @@ async function executeFindCandidates(jobId) {
   `;
 
   const token = localStorage.getItem('ai_hiring_auth_token');
-  const baseUrl = window.API_CONFIG ? window.API_CONFIG.BASE_URL : '/api';
+  const baseUrl = window.API_CONFIG ? window.API_CONFIG.BASE_URL : 'http://localhost:5000/api';
 
   let candidatesList = null;
 
@@ -115,9 +115,27 @@ async function executeFindCandidates(jobId) {
     });
 
     if (res.ok) {
-      const data = await res.json();
-      if (Array.isArray(data) && data.length > 0) {
-        candidatesList = data;
+      const responseData = await res.json();
+      // Backend returns { success: true, data: { candidates: [...] } }
+      const rawCandidates = responseData.data?.candidates
+        || responseData.data
+        || responseData.candidates
+        || responseData;
+
+      if (Array.isArray(rawCandidates) && rawCandidates.length > 0) {
+        // Normalize backend candidate shape to match frontend card expectations
+        candidatesList = rawCandidates.map(c => ({
+          id: c.workerId || c.id,
+          name: c.name,
+          occupation: c.occupation,
+          experience: typeof c.experience === 'number' ? `${c.experience} Years` : (c.experience || 'N/A'),
+          aiSkillScore: c.skillScore || 0,
+          matchScore: c.matchScore || 0,
+          matchedSkills: Array.isArray(c.matchedSkills) ? c.matchedSkills : [],
+          missingSkills: Array.isArray(c.missingSkills) ? c.missingSkills : [],
+          whyThisCandidate: c.reason || 'Strong match based on skills and experience alignment.',
+          status: c.status || 'Active'
+        }));
       }
     }
   } catch (e) {

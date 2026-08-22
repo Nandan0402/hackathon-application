@@ -45,7 +45,7 @@
         </li>
         <li class="sidebar-item">
           <a href="candidates.html" class="sidebar-link active">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
             <span>AI Candidate Matching</span>
           </a>
         </li>
@@ -110,9 +110,7 @@
               <div class="flex-1" style="width: 100%;">
                 <label class="form-label" for="job-requisition-select" style="margin-bottom: 0.35rem;">Active Job Requisition</label>
                 <select id="job-requisition-select" class="form-control" style="font-size: 1rem; padding: 0.75rem 1rem;">
-                  <option value="job_1">Senior AI Research Engineer (San Francisco, CA)</option>
-                  <option value="job_2">Lead MLOps Infrastructure Architect (New York, NY)</option>
-                  <option value="job_3">Electrician & Maintenance Specialist (Commercial)</option>
+                  <option value="">Loading jobs...</option>
                 </select>
               </div>
 
@@ -140,5 +138,32 @@
   <script src="../js/auth.js"></script>
   <script src="../js/employer.js"></script>
   <script src="../js/matching.js"></script>
+  <script>
+    // Dynamically load real jobs into the select dropdown
+    (async function loadJobOptions() {
+      const select = document.getElementById('job-requisition-select');
+      if (!select) return;
+      const token = localStorage.getItem('ai_hiring_auth_token');
+      const baseUrl = window.API_CONFIG ? window.API_CONFIG.BASE_URL : 'http://localhost:5000/api';
+      try {
+        const res = await fetch(`${baseUrl}/jobs`, {
+          headers: { 'Authorization': `Bearer ${token}` }
+        });
+        if (res.ok) {
+          const data = await res.json();
+          const jobs = data.data?.jobs || data.data || [];
+          if (Array.isArray(jobs) && jobs.length > 0) {
+            select.innerHTML = jobs.map(j => `
+              <option value="${j.jobId || j.id}">${j.title} (${j.location || 'Location TBD'})</option>
+            `).join('');
+          } else {
+            select.innerHTML = '<option value="">No active jobs. Please create one first.</option>';
+          }
+        }
+      } catch (e) {
+        select.innerHTML = '<option value="">Unable to load jobs. Check connection.</option>';
+      }
+    })();
+  </script>
 </body>
 </html>

@@ -20,9 +20,24 @@ router.use('/auth', authRoutes);
 
 // Worker Management routes
 router.use('/workers', workerRoutes);
+router.use('/worker/profile', workerRoutes);
+router.use('/worker/passport', (req, res, next) => {
+  const workerId = req.user?.uid || 'demo_worker_uid';
+  req.params.id = workerId;
+  const WorkerController = require('../controllers/workerController');
+  return WorkerController.getSkillPassport(req, res, next);
+});
 
 // AI Skill Assessment routes (Gemini-powered)
 router.use('/assessment', assessmentRoutes);
+router.use('/worker/assessments/start', (req, res, next) => {
+  const AssessmentController = require('../controllers/assessmentController');
+  return AssessmentController.generateQuestions(req, res, next);
+});
+router.use('/worker/assessments/submit', (req, res, next) => {
+  const AssessmentController = require('../controllers/assessmentController');
+  return AssessmentController.submitAssessment(req, res, next);
+});
 
 // Employer & Job Management routes
 router.use('/jobs', jobRoutes);

@@ -144,7 +144,40 @@ async function getWorkHistoryApi() {
   }
 
   const profile = await getWorkerProfile();
-  return profile.workHistory || [];
+  if (profile.workHistory && profile.workHistory.length > 0) {
+    return profile.workHistory;
+  }
+
+  const defaultHistory = [
+    {
+      historyId: "wh_init_1",
+      companyName: "Apex Electric & Power Corp",
+      company: "Apex Electric & Power Corp",
+      role: "Senior Electrical Specialist",
+      duration: "2023 - Present (2 Years)",
+      startDate: "2023-01",
+      endDate: "Present",
+      skillsUsed: ["480V Diagnostics", "Panel Wiring", "Transformer Maintenance"],
+      employerRating: "5.0 ★★★★★",
+      description: "Led electrical maintenance and high-voltage substation diagnostic operations with 100% safety compliance."
+    },
+    {
+      historyId: "wh_init_2",
+      companyName: "Industrial Power Grid Inc",
+      company: "Industrial Power Grid Inc",
+      role: "Lead Field Electrician",
+      duration: "2020 - 2023 (3 Years)",
+      startDate: "2020-03",
+      endDate: "2023-01",
+      skillsUsed: ["LOTO Protocols", "Industrial Automation", "Circuit Testing"],
+      employerRating: "4.9 ★★★★★",
+      description: "Supervised electrical distribution installations and emergency repairs across commercial manufacturing plants."
+    }
+  ];
+
+  profile.workHistory = defaultHistory;
+  localStorage.setItem('nexus_worker_profile_data', JSON.stringify(profile));
+  return defaultHistory;
 }
 
 /**

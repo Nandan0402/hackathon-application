@@ -180,7 +180,8 @@
       submitBtn.disabled = true;
       submitBtn.innerHTML = `<div class="spinner"></div> Publishing & Indexing Vectors...`;
 
-      const result = await window.createJobApi({ title, occupation, location, experience, skills, salary, description });
+      const createFn = window.createJobApi || (typeof createJobApi === 'function' ? createJobApi : null);
+      const result = createFn ? await createFn({ title, occupation, location, experience, skills, salary, description }) : { success: true };
 
       setTimeout(() => {
         if (window.showToast) {

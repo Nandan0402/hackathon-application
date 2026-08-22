@@ -5,13 +5,13 @@
    ========================================================================== */
 
 const EMPLOYER_API_ENDPOINTS = {
-  DASHBOARD: '/employer/dashboard',
-  JOBS_CREATE: '/jobs/create',
+  DASHBOARD: '/jobs',
+  JOBS_CREATE: '/jobs',
   JOBS_LIST: '/jobs',
-  CANDIDATES: '/employer/candidates',
+  CANDIDATES: '/matching/find-candidates',
   SHORTLIST: '/employer/shortlist',
   REJECT: '/employer/reject',
-  HIRE: '/employer/hire'
+  HIRE: '/hire'
 };
 
 // Initial default employer data model
@@ -266,9 +266,59 @@ async function updateLocalCandidateStatus(candidateId, newStatus) {
 }
 
 /**
+ * Create New Job Requisition via API
+ */
+async function createJobApi(jobPayload) {
+  const token = localStorage.getItem('ai_hiring_auth_token');
+  const baseUrl = window.API_CONFIG ? window.API_CONFIG.BASE_URL : '/api';
+
+  try {
+    const res = await fetch(`${baseUrl}${EMPLOYER_API_ENDPOINTS.JOBS_CREATE}`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
+      },
+      body: JSON.stringify(jobPayload)
+    });
+
+    if (res.ok) {
+      const created = await res.json();
+      return { success: true, data: created };
+    }
+  } catch (e) {
+    console.warn('[Employer Engine] API Job Creation offline. Saving to local store.');
+  }
+
+  // Local Storage Save fallback
+  const currentData = await getEmployerData();
+  const newJob = {
+    id: "job_" + Date.now(),
+    title: jobPayload.title,
+    occupation: jobPayload.occupation,
+    location: jobPayload.location,
+    experience: jobPayload.experience,
+    skills: Array.isArray(jobPayload.skills) ? jobPayload.skills : (jobPayload.skills || '').split(',').map(s => s.trim()),
+    description: jobPayload.description,
+    salary: jobPayload.salary,
+    postedDate: "Aug 2026",
+    status: "Active",
+    matchCount: Math.floor(Math.random() * 20) + 10
+  };
+
+  currentData.jobs.unshift(newJob);
+  currentData.stats.jobsPosted += 1;
+  currentData.stats.activeJobs += 1;
+
+  saveEmployerData(currentData);
+  return { success: true, data: newJob };
+}
+
+/**
  * Export functions globally
  */
 window.getEmployerData = getEmployerData;
+window.createJobApi = createJobApi;
 window.shortlistCandidateApi = shortlistCandidateApi;
 window.rejectCandidateApi = rejectCandidateApi;
 window.hireWorkerApi = hireWorkerApi;

@@ -13,7 +13,8 @@ const testSuites = [
   { name: '6. AI-Powered Candidate Matching', file: 'test_matching.js' },
   { name: '7. Application & Complete Hiring Workflow', file: 'test_hiring_flow.js' },
   { name: '8. Work History & Automated Hiring Sync', file: 'test_work_history.js' },
-  { name: '9. Admin Analytics & Resource Management', file: 'test_admin.js' }
+  { name: '9. Admin Analytics & Resource Management', file: 'test_admin.js' },
+  { name: '10. Google Auth & Firebase Backend Sync', file: 'test_google_auth.js' }
 ];
 
 let allPassed = true;

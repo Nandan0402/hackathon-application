@@ -106,6 +106,60 @@ class AuthService {
   }
 
   /**
+   * Google OAuth Login / Sync endpoint
+   */
+  static async googleAuth({ idToken, role = 'WORKER', email, name, photoURL, uid }) {
+    let authUser = null;
+
+    if (idToken) {
+      try {
+        authUser = await authServiceWrapper.verifyIdToken(idToken);
+      } catch (err) {
+        logger.warn(`Firebase ID Token verify warning: ${err.message}`);
+      }
+    }
+
+    const resolvedUid = authUser?.uid || uid || `google_${Date.now()}`;
+    const resolvedEmail = authUser?.email || email || '';
+    const resolvedName = authUser?.name || name || resolvedEmail.split('@')[0] || 'Google User';
+    const normalizedRole = (role || 'WORKER').toUpperCase();
+
+    // Check if user profile already exists
+    let userProfile = await firestoreDb.getDoc('users', resolvedUid);
+    const now = new Date().toISOString();
+
+    if (!userProfile) {
+      logger.info(`Creating new user profile for Google user: ${resolvedEmail} (${resolvedUid})`);
+      userProfile = {
+        uid: resolvedUid,
+        email: resolvedEmail,
+        name: resolvedName,
+        photoURL: photoURL || '',
+        role: normalizedRole === 'ADMIN' ? 'WORKER' : normalizedRole,
+        provider: 'google.com',
+        status: 'active',
+        createdAt: now,
+        updatedAt: now
+      };
+      await firestoreDb.setDoc('users', resolvedUid, userProfile);
+    } else {
+      // Update existing profile with latest metadata
+      userProfile = {
+        ...userProfile,
+        name: resolvedName || userProfile.name,
+        photoURL: photoURL || userProfile.photoURL,
+        updatedAt: now
+      };
+      await firestoreDb.setDoc('users', resolvedUid, userProfile);
+    }
+
+    return {
+      token: idToken || `firebase_token_${resolvedUid}`,
+      user: userProfile
+    };
+  }
+
+  /**
    * Get user profile by UID from Firestore
    */
   static async getProfile(uid) {

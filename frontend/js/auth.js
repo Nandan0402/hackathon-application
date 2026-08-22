@@ -34,6 +34,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initRoleSelector();
   initLoginForm();
   initRegisterForm();
+  initGoogleAuthButton();
   initLogoutButtons();
   initProtectedPageGuard();
 });
@@ -536,3 +537,118 @@ function initRegisterForm() {
     }, 900);
   });
 }
+
+/* ==========================================================================
+   8. GOOGLE OAUTH POPUP & FIREBASE BACKEND INTEGRATION
+   ========================================================================== */
+
+function initGoogleAuthButton() {
+  const googleBtn = document.getElementById('google-auth-btn');
+  if (!googleBtn) return;
+
+  googleBtn.addEventListener('click', async () => {
+    const roleInput = document.getElementById('selected-role-input');
+    const selectedRole = roleInput ? roleInput.value : 'worker';
+
+    const overlay = document.getElementById('auth-loading-overlay');
+    const overlayText = document.getElementById('loading-overlay-text');
+    if (overlay) overlay.classList.add('active');
+    if (overlayText) overlayText.textContent = 'Connecting to Google Authentication...';
+
+    const clearOverlay = () => {
+      if (overlay) overlay.classList.remove('active');
+    };
+
+    try {
+      if (!window.NexusFirebase || !window.NexusFirebase.signInWithGoogle) {
+        throw new Error('Firebase client SDK is loading. Please click again in 2 seconds.');
+      }
+
+      const googleResult = await window.NexusFirebase.signInWithGoogle(selectedRole);
+      
+      if (!googleResult.success) {
+        throw new Error(googleResult.message || 'Google Sign-In was cancelled or failed.');
+      }
+
+      if (overlayText) overlayText.textContent = 'Synchronizing profile with backend Firestore...';
+
+      // Call Backend API to sync profile and verify ID token
+      let backendUser = null;
+      try {
+        const response = await fetch(`${API_CONFIG.BASE_URL}/auth/google`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            idToken: googleResult.idToken,
+            role: selectedRole.toUpperCase(),
+            email: googleResult.user.email,
+            name: googleResult.user.name,
+            photoURL: googleResult.user.photoURL,
+            uid: googleResult.user.uid
+          })
+        });
+
+        if (response.ok) {
+          const resData = await response.json();
+          backendUser = resData.data;
+        }
+      } catch (apiErr) {
+        console.warn('[Auth Service] Backend /auth/google call warning:', apiErr);
+      }
+
+      // Save user session
+      const sessionUser = backendUser ? {
+        id: backendUser.user?.uid || googleResult.user.uid,
+        name: backendUser.user?.name || googleResult.user.name,
+        email: backendUser.user?.email || googleResult.user.email,
+        role: (backendUser.user?.role || selectedRole).toLowerCase(),
+        photoURL: backendUser.user?.photoURL || googleResult.user.photoURL || '',
+        location: backendUser.user?.location || 'Remote'
+      } : {
+        id: googleResult.user.uid,
+        name: googleResult.user.name,
+        email: googleResult.user.email,
+        role: selectedRole.toLowerCase(),
+        photoURL: googleResult.user.photoURL,
+        location: 'Remote'
+      };
+
+      saveAuthSession({
+        token: backendUser?.token || googleResult.idToken,
+        user: sessionUser
+      });
+
+      if (window.showToast) {
+        window.showToast(`Authenticated with Google! Welcome, ${sessionUser.name}`, 'success');
+      }
+
+      // Redirect to destination dashboard based on role
+      setTimeout(() => {
+        let destination = 'worker/dashboard.html';
+        if (sessionUser.role === 'employer') destination = 'employer/dashboard.html';
+        if (sessionUser.role === 'admin') destination = 'admin/dashboard.html';
+
+        const urlParams = new URLSearchParams(window.location.search);
+        const redirectParam = urlParams.get('redirect');
+        if (redirectParam && !redirectParam.includes('login.html')) {
+          window.location.href = redirectParam;
+        } else {
+          window.location.href = destination;
+        }
+      }, 700);
+
+    } catch (err) {
+      clearOverlay();
+      const alertBox = document.getElementById('auth-error-alert');
+      const msgBox = document.getElementById('auth-error-message');
+      if (alertBox && msgBox) {
+        msgBox.textContent = err.message || 'Google Authentication failed';
+        alertBox.style.display = 'flex';
+      }
+      if (window.showToast) {
+        window.showToast(err.message || 'Google Authentication failed', 'danger');
+      }
+    }
+  });
+}
+

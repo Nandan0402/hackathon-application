@@ -55,6 +55,27 @@ class AuthController {
   }
 
   /**
+   * POST /api/auth/google
+   * Authenticates / syncs Google OAuth user and returns profile + token.
+   */
+  static async googleLogin(req, res, next) {
+    try {
+      const { idToken, role, email, name, photoURL, uid } = req.body;
+      const result = await AuthService.googleAuth({ idToken, role, email, name, photoURL, uid });
+
+      return ApiResponse.success(
+        res,
+        'Google authentication successful',
+        result,
+        200
+      );
+    } catch (error) {
+      logger.error(`Google login error: ${error.message}`);
+      next(error);
+    }
+  }
+
+  /**
    * GET /api/auth/profile
    * Protected route to retrieve the authenticated user's profile and role.
    */

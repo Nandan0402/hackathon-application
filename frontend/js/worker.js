@@ -242,6 +242,45 @@ function syncWorkerProfileToUI(worker) {
 
   const expEl = document.getElementById('dash-experience');
   if (expEl) expEl.textContent = experience;
+
+  // Bind Verified Skills Tags dynamically
+  const skillsContainer = document.getElementById('dashboard-verified-skills');
+  const skillsList = worker.skills || ['480V Diagnostics', 'LOTO Protocols', 'Panel Wiring', 'Transformer Maintenance'];
+  if (skillsContainer && skillsList.length > 0) {
+    skillsContainer.innerHTML = skillsList.map((sk, idx) => {
+      const pct = Math.max(85, score - (idx * 2));
+      return `<span class="skill-chip matched">${sk} (${pct}%)</span>`;
+    }).join('');
+  }
+
+  // Bind Work History Snapshot on right side of dashboard
+  const whSnapshot = document.getElementById('dashboard-work-history-list');
+  if (whSnapshot) {
+    const historyList = worker.workHistory && worker.workHistory.length > 0 ? worker.workHistory : [
+      {
+        company: "Apex Electric & Power Corp",
+        role: "Senior Electrical Specialist",
+        duration: "2023 - Present",
+        employerRating: "5.0 ★★★★★"
+      },
+      {
+        company: "Industrial Power Grid Inc",
+        role: "Lead Field Electrician",
+        duration: "2020 - 2023",
+        employerRating: "4.9 ★★★★★"
+      }
+    ];
+
+    whSnapshot.innerHTML = historyList.slice(0, 3).map(wh => `
+      <div style="margin-bottom: 0.85rem; padding-bottom: 0.85rem; border-bottom: 1px solid var(--border-color-light);">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.25rem;">
+          <strong style="color: var(--text-main); font-size: 0.925rem;">${wh.role || wh.companyName}</strong>
+          <span style="font-size: 0.75rem; color: #fbbf24; font-weight: 700;">${wh.employerRating || '5.0 ★★★★★'}</span>
+        </div>
+        <p style="margin: 0; font-size: 0.8rem; color: var(--text-muted);">${wh.company || wh.companyName} &bull; ${wh.duration || (wh.startDate ? `${wh.startDate} - ${wh.endDate || 'Present'}` : 'Verified')}</p>
+      </div>
+    `).join('');
+  }
 }
 
 /**

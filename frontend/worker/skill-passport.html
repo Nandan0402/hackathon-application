@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DIGITAL SKILL PASSPORT | NexusAI</title>
+
+  <link rel="stylesheet" href="../css/variables.css">
+  <link rel="stylesheet" href="../css/main.css">
+  <link rel="stylesheet" href="../css/components.css">
+  <link rel="stylesheet" href="../css/navigation.css">
+  <link rel="stylesheet" href="../css/dashboard.css">
+
+  <style>
+    /* Premium Holographic & Card Aesthetics for Hackathon Demo */
+    .passport-main-card {
+      background: linear-gradient(145deg, #111936 0%, #162044 50%, #0a1128 100%);
+      border: 1px solid rgba(16, 185, 129, 0.35);
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6), 0 0 30px rgba(16, 185, 129, 0.15);
+      border-radius: var(--radius-xl);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .passport-main-card::before {
+      content: "";
+      position: absolute;
+      top: 0; left: -100%;
+      width: 100%; height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.05), transparent);
+      transition: left 0.8s ease;
+      pointer-events: none;
+    }
+
+    .passport-main-card:hover::before {
+      left: 100%;
+    }
+
+    .passport-header-banner {
+      background: linear-gradient(90deg, rgba(16, 185, 129, 0.2) 0%, rgba(59, 130, 246, 0.15) 100%);
+      border-bottom: 1px solid rgba(16, 185, 129, 0.3);
+      padding: 1.5rem 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .passport-title-text {
+      font-size: 1.5rem;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      background: linear-gradient(135deg, #ffffff 0%, var(--accent-green-light) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .passport-section-title {
+      font-size: 0.85rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--text-dim);
+      margin-bottom: 0.75rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .qr-placeholder {
+      width: 80px;
+      height: 80px;
+      background-color: #ffffff;
+      border-radius: var(--radius-md);
+      padding: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: var(--shadow-md);
+    }
+  </style>
+</head>
+<body data-auth-required="worker">
+  <div class="app-layout">
+
+    <!-- SIDEBAR NAVIGATION -->
+    <aside class="sidebar">
+      <div class="sidebar-header">
+        <a href="../index.html" class="sidebar-brand">
+          <div class="brand-icon">N</div>
+          <span>Nexus<span class="text-green">AI</span></span>
+        </a>
+        <button class="sidebar-toggle-btn" id="sidebar-toggle">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><line x1="9" y1="3" x2="9" y2="21"/></svg>
+        </button>
+      </div>
+
+      <div class="sidebar-role-badge">
+        <span class="role-dot"></span>
+        <span>WORKER PORTAL</span>
+      </div>
+
+      <ul class="sidebar-menu">
+        <li class="sidebar-item">
+          <a href="dashboard.html" class="sidebar-link">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+            <span>Worker Dashboard</span>
+          </a>
+        </li>
+        <li class="sidebar-item">
+          <a href="profile.html" class="sidebar-link">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+            <span>My Profile</span>
+          </a>
+        </li>
+        <li class="sidebar-item">
+          <a href="assessment.html" class="sidebar-link">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+            <span>AI Skill Assessment</span>
+          </a>
+        </li>
+        <li class="sidebar-item">
+          <a href="skill-passport.html" class="sidebar-link active">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M12 8v8"/><path d="M8 12h8"/></svg>
+            <span>AI Skill Passport</span>
+          </a>
+        </li>
+        <li class="sidebar-item">
+          <a href="jobs.html" class="sidebar-link">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>
+            <span>Recommended Jobs</span>
+          </a>
+        </li>
+        <li class="sidebar-item">
+          <a href="applications.html" class="sidebar-link">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+            <span>My Applications</span>
+          </a>
+        </li>
+        <li class="sidebar-item">
+          <a href="work-history.html" class="sidebar-link">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+            <span>Work History</span>
+          </a>
+        </li>
+        <li class="sidebar-item" style="margin-top: auto;">
+          <a href="../login.html" class="sidebar-link" data-action="logout" style="color: var(--status-danger);">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+            <span>Sign Out</span>
+          </a>
+        </li>
+      </ul>
+
+      <div class="sidebar-footer">
+        <div class="user-profile-bar">
+          <div class="avatar">AR</div>
+          <div class="user-info">
+            <span class="user-name worker-name-bind">Alex Rivera</span>
+            <span class="user-role-title worker-occupation-bind">AI & ML Engineer</span>
+          </div>
+        </div>
+      </div>
+    </aside>
+
+    <main class="main-content">
+      <!-- TOP ACTION BAR -->
+      <header class="topbar">
+        <h4 style="color: var(--text-main);">Digital Skill Passport Verification</h4>
+        <div class="flex items-center gap-3">
+          <button id="copy-profile-link-btn" class="btn btn-secondary btn-sm">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+            Copy Profile Link
+          </button>
+          <button id="share-passport-btn" class="btn btn-primary btn-sm">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
+            Share Passport
+          </button>
+        </div>
+      </header>
+
+      <div class="page-wrapper">
+        
+        <!-- MAIN HOLOGRAPHIC PASSPORT CREDENTIAL CARD -->
+        <div class="passport-main-card" style="max-width: 960px; margin: 0 auto 2.5rem;">
+          
+          <!-- BANNER HEADER -->
+          <div class="passport-header-banner">
+            <div class="flex items-center gap-3">
+              <div class="brand-icon" style="width: 40px; height: 40px; font-size: 1.25rem;">N</div>
+              <div>
+                <div class="passport-title-text">DIGITAL SKILL PASSPORT</div>
+                <div style="font-size: 0.75rem; color: var(--text-muted); font-weight: 500;">
+                  Autonomous AI Verification System &bull; NexusAI Protocol
+                </div>
+              </div>
+            </div>
+
+            <div class="flex items-center gap-3">
+              <span class="badge badge-green" style="padding: 0.4rem 0.875rem; font-size: 0.75rem; font-weight: 700; letter-spacing: 0.05em;">
+                ✓ VERIFIED CREDENTIAL
+              </span>
+            </div>
+          </div>
+
+          <!-- CARD BODY CONTAINER -->
+          <div style="padding: 2rem;">
+            
+            <!-- ROW 1: WORKER PROFILE SUMMARY & AI METRICS -->
+            <div class="grid grid-cols-3 lg:grid-cols-1 gap-8" style="margin-bottom: 2rem; border-bottom: 1px solid var(--border-color); padding-bottom: 2rem;">
+              
+              <!-- WORKER DETAILS (2 COLS) -->
+              <div style="grid-column: span 2;">
+                <div class="flex items-center gap-5 flex-wrap md:flex-col" style="margin-bottom: 1.5rem;">
+                  <div class="avatar" style="width: 84px; height: 84px; font-size: 2.25rem; background: linear-gradient(135deg, var(--accent-green) 0%, var(--accent-blue) 100%); flex-shrink: 0; border: 2px solid var(--accent-green);">AR</div>
+                  
+                  <div>
+                    <h1 id="passport-worker-name" style="font-size: 2rem; font-weight: 800; color: var(--text-main); margin-bottom: 0.25rem;">Alex Rivera</h1>
+                    <p id="passport-occupation" style="font-size: 1.125rem; color: var(--accent-green-light); font-weight: 600;">Senior AI & Machine Learning Engineer</p>
+                    
+                    <div class="flex items-center gap-4 flex-wrap" style="margin-top: 0.75rem; font-size: 0.875rem; color: var(--text-muted);">
+                      <div class="flex items-center gap-1.5">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                        Location: <strong id="passport-location" style="color: var(--text-main);">San Francisco, CA</strong>
+                      </div>
+                      <div style="width: 1px; height: 16px; background: var(--border-color);"></div>
+                      <div class="flex items-center gap-1.5">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                        Experience: <strong id="passport-experience" style="color: var(--text-main);">5 Years</strong>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div style="font-size: 0.8rem; color: var(--text-dim); background: rgba(0, 0, 0, 0.25); padding: 0.625rem 1rem; border-radius: var(--radius-md); border: 1px solid var(--border-color-light);">
+                  Cryptographic Vector Hash: <code id="passport-credential-hash" style="color: var(--accent-green-light);">NEXUS-PASSPORT-0x89A3B2F7E41C</code>
+                </div>
+              </div>
+
+              <!-- AI SKILL SCORE & LEVEL BADGE -->
+              <div style="background: rgba(10, 17, 40, 0.6); padding: 1.5rem; border-radius: var(--radius-lg); border: 1px solid rgba(16, 185, 129, 0.3); display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center;">
+                <div class="passport-section-title" style="margin-bottom: 0.5rem;">AI SKILL SCORE</div>
+                
+                <div id="passport-score-circle" class="score-circle" data-score="87" style="margin-bottom: 0.75rem;">
+                  <span id="passport-score-num" class="score-number" style="font-size: 1.75rem;">87/100</span>
+                </div>
+
+                <div class="passport-section-title" style="margin-bottom: 0.25rem;">SKILL LEVEL</div>
+                <div id="passport-skill-level" style="font-size: 1.25rem; font-weight: 800; color: var(--accent-green-light);">Advanced</div>
+              </div>
+
+            </div>
+
+            <!-- ROW 2: VERIFIED SKILLS (REQUIRES ✓ Wiring, ✓ Troubleshooting, ✓ Maintenance, ✓ Safety) -->
+            <div style="margin-bottom: 2.25rem;">
+              <div class="passport-section-title">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--accent-green)" stroke-width="2.5"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+                VERIFIED COMPETENCY MATRIX
+              </div>
+
+              <div id="passport-verified-skills-list" class="grid grid-cols-2 md:grid-cols-1 gap-3">
+                <!-- Verified Skills List rendered dynamically by passport.js -->
+              </div>
+            </div>
+
+            <!-- ROW 3: STRENGTHS & AREAS TO IMPROVE -->
+            <div class="grid grid-cols-2 md:grid-cols-1 gap-6" style="margin-bottom: 2.25rem;">
+              <!-- Strengths -->
+              <div style="background: rgba(16, 185, 129, 0.06); padding: 1.25rem; border-radius: var(--radius-lg); border: 1px solid rgba(16, 185, 129, 0.25);">
+                <div class="passport-section-title" style="color: var(--accent-green-light);">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><polyline points="12 8 16 12 12 16"/><line x1="8" y1="12" x2="16" y2="12"/></svg>
+                  STRENGTHS
+                </div>
+                <ul id="passport-strengths-list" style="list-style: none; display: flex; flex-direction: column; gap: 0.6rem;">
+                  <!-- Dynamically rendered -->
+                </ul>
+              </div>
+
+              <!-- Areas to Improve -->
+              <div style="background: rgba(245, 158, 11, 0.06); padding: 1.25rem; border-radius: var(--radius-lg); border: 1px solid rgba(245, 158, 11, 0.25);">
+                <div class="passport-section-title" style="color: #fbbf24;">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+                  AREAS TO IMPROVE
+                </div>
+                <ul id="passport-improve-list" style="list-style: none; display: flex; flex-direction: column; gap: 0.6rem;">
+                  <!-- Dynamically rendered -->
+                </ul>
+              </div>
+            </div>
+
+            <!-- ROW 4: ASSESSMENT SUMMARY -->
+            <div style="margin-bottom: 2.25rem;">
+              <div class="passport-section-title">ASSESSMENT SUMMARY</div>
+              <p id="passport-summary-text" style="font-size: 0.95rem; color: var(--text-main); line-height: 1.6; background: rgba(0, 0, 0, 0.3); padding: 1.25rem; border-radius: var(--radius-md); border: 1px solid var(--border-color-light);">
+                Worker has achieved an Advanced AI Skill Rating of 87/100. Demonstrates top-tier competency in wiring, system troubleshooting, preventive maintenance, and operational safety protocols.
+              </p>
+            </div>
+
+            <!-- ROW 5: WORK HISTORY -->
+            <div>
+              <div class="passport-section-title">WORK HISTORY</div>
+              <div id="passport-work-history-list">
+                <!-- Dynamically rendered by passport.js -->
+              </div>
+            </div>
+
+          </div>
+
+          <!-- PASSPORT FOOTER BAR -->
+          <div style="padding: 1.25rem 2rem; background: rgba(10, 17, 40, 0.9); border-top: 1px solid var(--border-color-light); display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem;">
+            <div class="flex items-center gap-3">
+              <!-- QR Code Mockup Badge -->
+              <div class="qr-placeholder">
+                <svg width="68" height="68" viewBox="0 0 24 24" fill="none" stroke="#0a1128" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><path d="M10 3v4"/><path d="M3 10h4"/><path d="M14 10h4"/></svg>
+              </div>
+              <div style="font-size: 0.8rem; color: var(--text-dim);">
+                <div>Scan QR to verify authentic credential payload</div>
+                <div>Status: <strong class="text-green">Active & Authenticated</strong></div>
+              </div>
+            </div>
+
+            <div class="flex gap-3">
+              <button id="copy-profile-link-btn-footer" class="btn btn-secondary btn-sm" onclick="document.getElementById('copy-profile-link-btn').click();">
+                Copy Link
+              </button>
+              <button id="share-passport-btn-footer" class="btn btn-primary btn-sm" onclick="document.getElementById('share-passport-btn').click();">
+                Share Passport
+              </button>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <!-- SHARE PASSPORT MODAL -->
+  <div id="share-passport-modal" class="modal-backdrop">
+    <div class="modal">
+      <div class="modal-header">
+        <h3 class="card-title">Share Digital Skill Passport</h3>
+        <button class="alert-close" data-modal-close>&times;</button>
+      </div>
+      <div class="modal-body">
+        <p style="font-size: 0.9rem; color: var(--text-muted); margin-bottom: 1.25rem;">
+          Share your verified AI Skill Passport link with recruiters, hiring managers, or enterprise platforms.
+        </p>
+
+        <div class="form-group">
+          <label class="form-label">Public Verification URL</label>
+          <div class="input-icon-wrapper">
+            <input type="text" id="share-url-input" class="form-control" readonly value="https://nexusai.io/passport/verify?id=NEXUS-PASSPORT-0x89A3B2F7E41C">
+          </div>
+        </div>
+
+        <div class="flex gap-3 flex-wrap" style="margin-top: 1rem;">
+          <button class="btn btn-primary flex-1" onclick="navigator.clipboard.writeText(document.getElementById('share-url-input').value); window.showToast('Public Passport Link copied!', 'success'); window.closeModal('share-passport-modal');">
+            Copy Public Link
+          </button>
+          <button class="btn btn-secondary flex-1" onclick="window.showToast('Shared to LinkedIn!', 'info'); window.closeModal('share-passport-modal');">
+            Share to LinkedIn
+          </button>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-modal-close>Close</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="../js/main.js"></script>
+  <script src="../js/auth.js"></script>
+  <script src="../js/worker.js"></script>
+  <script src="../js/passport.js"></script>
+</body>
+</html>

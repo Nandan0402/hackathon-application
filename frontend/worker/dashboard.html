@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Worker Dashboard | NexusAI</title>
+
+  <link rel="stylesheet" href="../css/variables.css">
+  <link rel="stylesheet" href="../css/main.css">
+  <link rel="stylesheet" href="../css/components.css">
+  <link rel="stylesheet" href="../css/navigation.css">
+  <link rel="stylesheet" href="../css/dashboard.css">
+</head>
+<body data-auth-required="worker">
+  <div class="app-layout">
+
+    <!-- SIDEBAR NAVIGATION -->
+    <aside class="sidebar">
+      <div class="sidebar-header">
+        <a href="../index.html" class="sidebar-brand">
+          <div class="brand-icon">N</div>
+          <span>Nexus<span class="text-green">AI</span></span>
+        </a>
+        <button class="sidebar-toggle-btn" id="sidebar-toggle">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><line x1="9" y1="3" x2="9" y2="21"/></svg>
+        </button>
+      </div>
+
+      <div class="sidebar-role-badge">
+        <span class="role-dot"></span>
+        <span>WORKER PORTAL</span>
+      </div>
+
+      <ul class="sidebar-menu">
+        <li class="sidebar-item">
+          <a href="dashboard.html" class="sidebar-link active">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+            <span>Worker Dashboard</span>
+          </a>
+        </li>
+        <li class="sidebar-item">
+          <a href="profile.html" class="sidebar-link">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+            <span>My Profile</span>
+          </a>
+        </li>
+        <li class="sidebar-item">
+          <a href="assessment.html" class="sidebar-link">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+            <span>AI Skill Assessment</span>
+          </a>
+        </li>
+        <li class="sidebar-item">
+          <a href="skill-passport.html" class="sidebar-link">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M12 8v8"/><path d="M8 12h8"/></svg>
+            <span>AI Skill Passport</span>
+          </a>
+        </li>
+        <li class="sidebar-item">
+          <a href="jobs.html" class="sidebar-link">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>
+            <span>Recommended Jobs</span>
+          </a>
+        </li>
+        <li class="sidebar-item">
+          <a href="applications.html" class="sidebar-link">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+            <span>My Applications</span>
+          </a>
+        </li>
+        <li class="sidebar-item">
+          <a href="work-history.html" class="sidebar-link">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+            <span>Work History</span>
+          </a>
+        </li>
+        <li class="sidebar-item" style="margin-top: auto;">
+          <a href="../login.html" class="sidebar-link" data-action="logout" style="color: var(--status-danger);">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+            <span>Sign Out</span>
+          </a>
+        </li>
+      </ul>
+
+      <div class="sidebar-footer">
+        <div class="user-profile-bar">
+          <div class="avatar">AR</div>
+          <div class="user-info">
+            <span class="user-name worker-name-bind">Alex Rivera</span>
+            <span class="user-role-title worker-occupation-bind">AI & ML Engineer</span>
+          </div>
+        </div>
+      </div>
+    </aside>
+
+    <main class="main-content">
+      <header class="topbar">
+        <div class="topbar-search">
+          <div class="input-icon-wrapper">
+            <svg class="input-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+            <input type="text" class="form-control" style="padding-top:0.4rem; padding-bottom:0.4rem;" placeholder="Search jobs, skills, or applications...">
+          </div>
+        </div>
+
+        <div class="flex items-center gap-4">
+          <a href="skill-passport.html" class="btn btn-outline btn-sm">View Skill Passport</a>
+          <div class="avatar">AR</div>
+        </div>
+      </header>
+
+      <div class="page-wrapper">
+        <!-- WORKER HEADER PROFILE SUMMARY -->
+        <div class="dashboard-header">
+          <div>
+            <h1 class="dashboard-title">
+              Worker Hub: <span class="worker-name-bind text-green">Alex Rivera</span>
+            </h1>
+            <p class="dashboard-subtitle">
+              <span class="worker-occupation-bind">Senior AI & Machine Learning Engineer</span> &bull; 
+              Experience: <strong class="worker-exp-bind">5 Years</strong>
+            </p>
+          </div>
+
+          <a href="profile.html" class="btn btn-primary">
+            Edit Full Profile
+          </a>
+        </div>
+
+        <!-- METRICS ROW: AI SKILL SCORE, SKILL LEVEL, APPLICATIONS, VERIFIED SKILLS -->
+        <div class="metrics-grid">
+          <div class="metric-card">
+            <div class="metric-info">
+              <span class="metric-label">AI Skill Score</span>
+              <span class="metric-value text-green worker-score-bind">94%</span>
+              <span class="metric-change positive">Top 5% Candidate Vector</span>
+            </div>
+            <div class="metric-icon-box">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+            </div>
+          </div>
+
+          <div class="metric-card">
+            <div class="metric-info">
+              <span class="metric-label">Skill Level</span>
+              <span class="metric-value worker-level-bind" style="font-size: 1.25rem;">Senior / Expert</span>
+              <span class="metric-change positive">Verified by Autonomous AI</span>
+            </div>
+            <div class="metric-icon-box">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+            </div>
+          </div>
+
+          <div class="metric-card">
+            <div class="metric-info">
+              <span class="metric-label">Active Applications</span>
+              <span class="metric-value">3</span>
+              <span class="metric-change positive">1 Interview Scheduled</span>
+            </div>
+            <div class="metric-icon-box">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+            </div>
+          </div>
+
+          <div class="metric-card">
+            <div class="metric-info">
+              <span class="metric-label">Work Experience</span>
+              <span class="metric-value worker-exp-bind">5 Years</span>
+              <span class="metric-change positive">2 Companies Verified</span>
+            </div>
+            <div class="metric-icon-box">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+            </div>
+          </div>
+        </div>
+
+        <!-- VERIFIED SKILLS BADGES SECTION -->
+        <div class="card" style="margin-bottom: 2rem;">
+          <div class="card-header">
+            <h3 class="card-title">Verified Skills & Vectors</h3>
+            <a href="skill-passport.html" class="btn btn-sm btn-outline">Passport Badges &rarr;</a>
+          </div>
+          <div class="card-body">
+            <div class="skill-tags" id="dashboard-verified-skills">
+              <span class="skill-chip matched">PyTorch (96%)</span>
+              <span class="skill-chip matched">Distributed Training (94%)</span>
+              <span class="skill-chip matched">Python / C++ (98%)</span>
+              <span class="skill-chip matched">CUDA Acceleration (90%)</span>
+              <span class="skill-chip matched">Transformer LLMs (95%)</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- TWO COLUMN LAYOUT: RECOMMENDED JOBS & APPLICATIONS & WORK HISTORY -->
+        <div class="grid grid-cols-3 lg:grid-cols-1 gap-8">
+          
+          <!-- LEFT 2 COLS: RECOMMENDED JOBS & MY APPLICATIONS -->
+          <div style="grid-column: span 2;">
+            
+            <!-- RECOMMENDED JOBS -->
+            <div class="card" style="margin-bottom: 2rem;">
+              <div class="card-header">
+                <h3 class="card-title">Recommended AI Jobs</h3>
+                <a href="jobs.html" class="btn btn-sm btn-outline">View All Jobs &rarr;</a>
+              </div>
+
+              <div class="card-body">
+                <div class="job-item-card">
+                  <div>
+                    <div class="flex items-center gap-3" style="margin-bottom: 0.25rem;">
+                      <h4 style="font-size: 1.1rem; color: var(--text-main);">Senior AI Research Engineer</h4>
+                      <span class="badge ai-match-badge">98% Match</span>
+                    </div>
+                    <p style="font-size: 0.875rem; color: var(--text-muted); margin-bottom: 0.5rem;">
+                      Anthropic Labs &bull; Remote &bull; $210k - $260k
+                    </p>
+                    <div class="skill-tags">
+                      <span class="skill-chip matched">PyTorch</span>
+                      <span class="skill-chip matched">Transformers</span>
+                    </div>
+                  </div>
+                  <button class="btn btn-primary btn-sm" onclick="window.showToast('Application submitted to Anthropic Labs!', 'success')">
+                    1-Click Apply
+                  </button>
+                </div>
+
+                <div class="job-item-card">
+                  <div>
+                    <div class="flex items-center gap-3" style="margin-bottom: 0.25rem;">
+                      <h4 style="font-size: 1.1rem; color: var(--text-main);">Lead MLOps Infrastructure Architect</h4>
+                      <span class="badge ai-match-badge">94% Match</span>
+                    </div>
+                    <p style="font-size: 0.875rem; color: var(--text-muted); margin-bottom: 0.5rem;">
+                      DataScale Enterprise &bull; Hybrid &bull; $190k - $230k
+                    </p>
+                    <div class="skill-tags">
+                      <span class="skill-chip matched">Kubernetes</span>
+                      <span class="skill-chip matched">MLflow</span>
+                    </div>
+                  </div>
+                  <button class="btn btn-primary btn-sm" onclick="window.showToast('Application submitted to DataScale Enterprise!', 'success')">
+                    1-Click Apply
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <!-- MY APPLICATIONS SUMMARY -->
+            <div class="card">
+              <div class="card-header">
+                <h3 class="card-title">My Active Applications</h3>
+                <a href="applications.html" class="btn btn-sm btn-outline">Track Kanban &rarr;</a>
+              </div>
+              <div class="card-body">
+                <div class="table-responsive">
+                  <table class="data-table">
+                    <thead>
+                      <tr>
+                        <th>Job Title</th>
+                        <th>Company</th>
+                        <th>Applied Date</th>
+                        <th>Match</th>
+                        <th>Status Stage</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td style="font-weight: 600;">Senior AI Research Engineer</td>
+                        <td>Anthropic Labs</td>
+                        <td>Aug 18, 2026</td>
+                        <td><span class="badge ai-match-badge">98%</span></td>
+                        <td><span class="badge badge-green">Interview Scheduled (Aug 24)</span></td>
+                      </tr>
+                      <tr>
+                        <td style="font-weight: 600;">Lead MLOps Architect</td>
+                        <td>DataScale Enterprise</td>
+                        <td>Aug 12, 2026</td>
+                        <td><span class="badge ai-match-badge">94%</span></td>
+                        <td><span class="badge badge-blue">Screening Passed</span></td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- RIGHT COL: WORK HISTORY SNAPSHOT -->
+          <div>
+            <div class="card" style="margin-bottom: 2rem;">
+              <div class="card-header">
+                <h3 class="card-title" style="font-size: 1rem;">Verified Work History</h3>
+                <a href="work-history.html" class="btn btn-sm btn-outline">Edit &rarr;</a>
+              </div>
+              <div class="card-body" id="dashboard-work-history-list">
+                <!-- Dynamically populated by worker.js -->
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <script src="../js/main.js"></script>
+  <script src="../js/auth.js"></script>
+  <script src="../js/worker.js"></script>
+  <script src="../js/dashboard.js"></script>
+</body>
+</html>

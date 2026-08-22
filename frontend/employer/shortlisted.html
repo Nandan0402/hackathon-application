@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Shortlisted Candidates | NexusAI Employer</title>
+
+  <link rel="stylesheet" href="../css/variables.css">
+  <link rel="stylesheet" href="../css/main.css">
+  <link rel="stylesheet" href="../css/components.css">
+  <link rel="stylesheet" href="../css/navigation.css">
+  <link rel="stylesheet" href="../css/dashboard.css">
+</head>
+<body data-auth-required="employer">
+  <div class="app-layout">
+
+    <aside class="sidebar">
+      <div class="sidebar-header">
+        <a href="../index.html" class="sidebar-brand">
+          <div class="brand-icon">N</div>
+          <span>Nexus<span class="text-green">AI</span></span>
+        </a>
+        <button class="sidebar-toggle-btn" id="sidebar-toggle">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><line x1="9" y1="3" x2="9" y2="21"/></svg>
+        </button>
+      </div>
+
+      <div class="sidebar-role-badge">
+        <span class="role-dot" style="background-color: var(--accent-blue); box-shadow: 0 0 8px var(--accent-blue);"></span>
+        <span>EMPLOYER PORTAL</span>
+      </div>
+
+      <ul class="sidebar-menu">
+        <li class="sidebar-item">
+          <a href="dashboard.html" class="sidebar-link">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>
+            <span>Employer Dashboard</span>
+          </a>
+        </li>
+        <li class="sidebar-item">
+          <a href="create-job.html" class="sidebar-link">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+            <span>Create New Job</span>
+          </a>
+        </li>
+        <li class="sidebar-item">
+          <a href="candidates.html" class="sidebar-link">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+            <span>All Candidates</span>
+          </a>
+        </li>
+        <li class="sidebar-item">
+          <a href="shortlisted.html" class="sidebar-link active">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+            <span>Shortlisted Candidates</span>
+          </a>
+        </li>
+        <li class="sidebar-item">
+          <a href="hired.html" class="sidebar-link">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+            <span>Hired Candidates</span>
+          </a>
+        </li>
+        <li class="sidebar-item" style="margin-top: auto;">
+          <a href="../login.html" class="sidebar-link" data-action="logout" style="color: var(--status-danger);">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+            <span>Sign Out</span>
+          </a>
+        </li>
+      </ul>
+
+      <div class="sidebar-footer">
+        <div class="user-profile-bar">
+          <div class="avatar" style="background: var(--accent-blue);">TC</div>
+          <div class="user-info">
+            <span class="user-name">TechCorp Recruiter</span>
+            <span class="user-role-title">Enterprise Employer</span>
+          </div>
+        </div>
+      </div>
+    </aside>
+
+    <main class="main-content">
+      <header class="topbar">
+        <h4 style="color: var(--text-main);">Shortlisted Candidates Pipeline</h4>
+        <a href="dashboard.html" class="btn btn-secondary btn-sm">&larr; Back to Dashboard</a>
+      </header>
+
+      <div class="page-wrapper">
+        <div class="dashboard-header">
+          <div>
+            <h1 class="dashboard-title">
+              Shortlisted Candidates
+            </h1>
+            <p class="dashboard-subtitle">Candidates selected for technical interview and offer stages.</p>
+          </div>
+          <span class="badge badge-blue">18 Candidates Shortlisted</span>
+        </div>
+
+        <div class="flex flex-col gap-4">
+          
+          <div class="candidate-row candidate-card-item flex-wrap">
+            <div class="avatar" style="width: 48px; height: 48px; background: linear-gradient(135deg, var(--accent-green) 0%, var(--accent-blue) 100%); font-weight:700;">AR</div>
+            <div class="flex-1" style="min-width: 240px;">
+              <div class="flex items-center gap-3" style="margin-bottom: 0.2rem;">
+                <h3 style="font-size: 1.1rem;">Alex Rivera</h3>
+                <span class="badge ai-match-badge">96% Match Vector</span>
+              </div>
+              <p style="font-size: 0.85rem; color: var(--text-muted);">Senior AI & Machine Learning Engineer &bull; San Francisco, CA &bull; 5 Yrs Exp</p>
+            </div>
+            <div class="flex items-center gap-3">
+              <button class="btn btn-primary btn-sm" onclick="window.showToast('Schedule interview link sent to Alex Rivera', 'success')">Schedule Interview</button>
+              <button class="btn btn-secondary btn-sm" onclick="window.updateCandidateStatus('cand_1', 'Hired'); window.showToast('Alex Rivera marked as Hired!', 'success');">Move to Hired</button>
+            </div>
+          </div>
+
+          <div class="candidate-row candidate-card-item flex-wrap">
+            <div class="avatar" style="width: 48px; height: 48px; background: linear-gradient(135deg, var(--accent-blue) 0%, var(--accent-purple) 100%); font-weight:700;">SC</div>
+            <div class="flex-1" style="min-width: 240px;">
+              <div class="flex items-center gap-3" style="margin-bottom: 0.2rem;">
+                <h3 style="font-size: 1.1rem;">Sarah Chen</h3>
+                <span class="badge ai-match-badge">98% Match Vector</span>
+              </div>
+              <p style="font-size: 0.85rem; color: var(--text-muted);">Sr. AI Research Engineer &bull; Stanford, CA &bull; 6 Yrs Exp</p>
+            </div>
+            <div class="flex items-center gap-3">
+              <button class="btn btn-primary btn-sm" onclick="window.showToast('Schedule interview link sent to Sarah Chen', 'success')">Schedule Interview</button>
+              <button class="btn btn-secondary btn-sm" onclick="window.updateCandidateStatus('cand_2', 'Hired'); window.showToast('Sarah Chen marked as Hired!', 'success');">Move to Hired</button>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <script src="../js/main.js"></script>
+  <script src="../js/auth.js"></script>
+  <script src="../js/employer.js"></script>
+</body>
+</html>

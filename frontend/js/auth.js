@@ -34,10 +34,79 @@ document.addEventListener('DOMContentLoaded', () => {
   initRoleSelector();
   initLoginForm();
   initRegisterForm();
+  initDemoCredentials();
   initGoogleAuthButton();
   initLogoutButtons();
   initProtectedPageGuard();
+  checkUrlAuthErrors();
 });
+
+/**
+ * Handle URL authentication error indicators
+ */
+function checkUrlAuthErrors() {
+  const urlParams = new URLSearchParams(window.location.search);
+  if (urlParams.get('error') === 'unauthenticated') {
+    const globalAlert = document.getElementById('auth-error-alert');
+    const alertMsg = document.getElementById('auth-error-message');
+    if (globalAlert && alertMsg) {
+      alertMsg.textContent = 'Please sign in to access your requested dashboard.';
+      globalAlert.className = 'alert alert-warning';
+      globalAlert.style.display = 'flex';
+    }
+  }
+}
+
+/**
+ * Hackathon Demo Credentials Auto-Fill Handler
+ */
+function initDemoCredentials() {
+  const demoButtons = document.querySelectorAll('.use-demo-btn');
+  if (!demoButtons.length) return;
+
+  demoButtons.forEach((btn) => {
+    btn.addEventListener('click', (e) => {
+      e.preventDefault();
+      const role = btn.getAttribute('data-demo-role');
+      const email = btn.getAttribute('data-email');
+      const password = btn.getAttribute('data-password');
+
+      // Populate input fields
+      const emailInput = document.getElementById('email');
+      const passwordInput = document.getElementById('password');
+      const roleInput = document.getElementById('selected-role-input');
+
+      if (emailInput) emailInput.value = email;
+      if (passwordInput) passwordInput.value = password;
+      if (roleInput) roleInput.value = role;
+
+      // Update role selector tab UI
+      document.querySelectorAll('.role-select-btn').forEach((b) => {
+        if (b.getAttribute('data-role') === role) {
+          b.classList.remove('btn-secondary');
+          b.classList.add('active', 'btn-primary');
+        } else {
+          b.classList.remove('active', 'btn-primary');
+          b.classList.add('btn-secondary');
+        }
+      });
+
+      // Update role notice guidance
+      const roleNotice = document.getElementById('role-notice-text');
+      if (roleNotice) {
+        if (role === 'worker') roleNotice.textContent = 'Sign in as Job Seeker / Candidate';
+        if (role === 'employer') roleNotice.textContent = 'Sign in as Hiring Employer';
+        if (role === 'admin') roleNotice.textContent = 'Sign in as System Administrator';
+      }
+
+      clearAllErrors('login-form');
+
+      if (window.showToast) {
+        window.showToast(`Loaded demo credentials for ${role.toUpperCase()}`, 'info');
+      }
+    });
+  });
+}
 
 /* ==========================================================================
    1. SESSION & LOCAL STORAGE MANAGEMENT
@@ -401,20 +470,50 @@ function initLoginForm() {
       if (overlay) overlay.classList.remove('active');
 
       if (result.success) {
+        const userRole = (result.data.user?.role || role).toLowerCase();
+        const selectedRole = role.toLowerCase();
+
+        // Strict Role Validation: Check selected tab against actual user profile role
+        if (userRole !== selectedRole && userRole !== 'admin') {
+          submitBtn.disabled = false;
+          submitBtn.innerHTML = originalBtnText;
+
+          const globalAlert = document.getElementById('auth-error-alert');
+          const alertMsg = document.getElementById('auth-error-message');
+          if (globalAlert && alertMsg) {
+            alertMsg.textContent = 'You are not authorized to access this dashboard.';
+            globalAlert.className = 'alert alert-danger';
+            globalAlert.style.display = 'flex';
+          }
+
+          if (window.showToast) {
+            window.showToast('You are not authorized to access this dashboard.', 'danger');
+          }
+          return;
+        }
+
         saveAuthSession(result.data);
 
         if (window.showToast) {
-          window.showToast(`Login successful! Launching ${role.toUpperCase()} Dashboard...`, 'success');
+          window.showToast(`Login successful! Launching ${userRole.toUpperCase()} Dashboard...`, 'success');
         }
 
         // Determine destination dashboard route based on user role
         let targetDashboard = 'worker/dashboard.html';
-        if (role === 'employer') targetDashboard = 'employer/dashboard.html';
-        if (role === 'admin') targetDashboard = 'admin/dashboard.html';
+        if (userRole === 'employer') targetDashboard = 'employer/dashboard.html';
+        if (userRole === 'admin') targetDashboard = 'admin/dashboard.html';
 
-        setTimeout(() => {
-          window.location.href = targetDashboard;
-        }, 500);
+        const urlParams = new URLSearchParams(window.location.search);
+        const redirectParam = urlParams.get('redirect');
+        if (redirectParam && !redirectParam.includes('login.html')) {
+          setTimeout(() => {
+            window.location.href = redirectParam;
+          }, 400);
+        } else {
+          setTimeout(() => {
+            window.location.href = targetDashboard;
+          }, 400);
+        }
 
       } else {
         submitBtn.disabled = false;
@@ -424,6 +523,7 @@ function initLoginForm() {
         const alertMsg = document.getElementById('auth-error-message');
         if (globalAlert && alertMsg) {
           alertMsg.textContent = result.message || 'Invalid email or password.';
+          globalAlert.className = 'alert alert-danger';
           globalAlert.style.display = 'flex';
         }
 
@@ -431,7 +531,7 @@ function initLoginForm() {
           window.showToast(result.message || 'Authentication failed. Please check credentials.', 'danger');
         }
       }
-    }, 900);
+    }, 600);
   });
 }
 

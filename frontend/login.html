@@ -36,7 +36,7 @@
         <p id="role-notice-text">Sign in to access your NexusAI Portal</p>
       </div>
 
-      <!-- General Alert Container for Global Auth Errors -->
+      <!-- General Alert Container for Global Auth Errors / Warnings -->
       <div id="auth-error-alert" class="alert alert-danger" style="display: none;">
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#ef4444" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg>
         <span id="auth-error-message">Invalid email or password.</span>
@@ -44,9 +44,9 @@
 
       <!-- Role Selector Toggle Buttons -->
       <div style="display: flex; gap: 0.5rem; margin-bottom: 1.5rem; background: var(--bg-dark); padding: 0.35rem; border-radius: var(--radius-md); border: 1px solid var(--border-color-light);">
-        <button type="button" class="btn btn-primary role-select-btn flex-1" data-role="worker">Worker</button>
-        <button type="button" class="btn btn-secondary role-select-btn flex-1" data-role="employer">Employer</button>
-        <button type="button" class="btn btn-secondary role-select-btn flex-1" data-role="admin">Admin</button>
+        <button type="button" class="btn btn-primary role-select-btn flex-1" data-role="worker" id="role-btn-worker">Worker</button>
+        <button type="button" class="btn btn-secondary role-select-btn flex-1" data-role="employer" id="role-btn-employer">Employer</button>
+        <button type="button" class="btn btn-secondary role-select-btn flex-1" data-role="admin" id="role-btn-admin">Admin</button>
       </div>
 
       <!-- Google One-Click Sign In -->
@@ -73,7 +73,7 @@
           <label class="form-label" for="email">Email Address</label>
           <div class="input-icon-wrapper">
             <svg class="input-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
-            <input type="email" id="email" class="form-control" placeholder="name@domain.com" required value="alex.rivera@example.com">
+            <input type="email" id="email" class="form-control" placeholder="name@domain.com" required value="worker.demo@hackathon.local">
           </div>
           <span class="form-error" id="email-error">Please enter a valid email address.</span>
         </div>
@@ -85,7 +85,7 @@
           </div>
           <div class="input-icon-wrapper">
             <svg class="input-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
-            <input type="password" id="password" class="form-control" placeholder="••••••••" required value="demo12345">
+            <input type="password" id="password" class="form-control" placeholder="••••••••" required value="Worker@12345">
           </div>
           <span class="form-error" id="password-error">Password is required.</span>
         </div>
@@ -100,6 +100,52 @@
           Sign In & Launch Dashboard
         </button>
       </form>
+
+      <!-- DEMO CREDENTIALS BOX -->
+      <div class="demo-credentials-box" style="margin-top: 1.75rem; padding: 1.25rem; background: rgba(15, 23, 42, 0.6); border: 1px dashed var(--border-color); border-radius: var(--radius-md);">
+        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.75rem;">
+          <span style="font-size: 0.85rem; font-weight: 700; color: var(--accent-green); text-transform: uppercase; letter-spacing: 0.05em; display: flex; align-items: center; gap: 0.4rem;">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+            Hackathon Demo Credentials
+          </span>
+          <span style="font-size: 0.75rem; color: var(--text-muted);">One-Click Autofill</span>
+        </div>
+
+        <div style="display: flex; flex-direction: column; gap: 0.6rem;">
+          <!-- Worker Demo -->
+          <div style="display: flex; align-items: center; justify-content: space-between; padding: 0.5rem 0.75rem; background: var(--bg-dark); border-radius: var(--radius-sm); border: 1px solid var(--border-color-light);">
+            <div>
+              <div style="font-size: 0.825rem; font-weight: 600; color: var(--text-main);">Worker</div>
+              <div style="font-size: 0.75rem; color: var(--text-muted); font-family: monospace;">worker.demo@hackathon.local</div>
+            </div>
+            <button type="button" class="btn btn-secondary btn-sm use-demo-btn" data-demo-role="worker" data-email="worker.demo@hackathon.local" data-password="Worker@12345" style="padding: 0.25rem 0.65rem; font-size: 0.75rem;">
+              Use Credentials
+            </button>
+          </div>
+
+          <!-- Employer Demo -->
+          <div style="display: flex; align-items: center; justify-content: space-between; padding: 0.5rem 0.75rem; background: var(--bg-dark); border-radius: var(--radius-sm); border: 1px solid var(--border-color-light);">
+            <div>
+              <div style="font-size: 0.825rem; font-weight: 600; color: var(--text-main);">Employer</div>
+              <div style="font-size: 0.75rem; color: var(--text-muted); font-family: monospace;">employer.demo@hackathon.local</div>
+            </div>
+            <button type="button" class="btn btn-secondary btn-sm use-demo-btn" data-demo-role="employer" data-email="employer.demo@hackathon.local" data-password="Employer@12345" style="padding: 0.25rem 0.65rem; font-size: 0.75rem;">
+              Use Credentials
+            </button>
+          </div>
+
+          <!-- Admin Demo -->
+          <div style="display: flex; align-items: center; justify-content: space-between; padding: 0.5rem 0.75rem; background: var(--bg-dark); border-radius: var(--radius-sm); border: 1px solid var(--border-color-light);">
+            <div>
+              <div style="font-size: 0.825rem; font-weight: 600; color: var(--text-main);">Admin</div>
+              <div style="font-size: 0.75rem; color: var(--text-muted); font-family: monospace;">admin.demo@hackathon.local</div>
+            </div>
+            <button type="button" class="btn btn-secondary btn-sm use-demo-btn" data-demo-role="admin" data-email="admin.demo@hackathon.local" data-password="Admin@12345" style="padding: 0.25rem 0.65rem; font-size: 0.75rem;">
+              Use Credentials
+            </button>
+          </div>
+        </div>
+      </div>
 
       <div style="margin-top: 1.5rem; text-align: center; font-size: 0.875rem; color: var(--text-muted);">
         Don't have an account? <a href="register.html" style="font-weight: 600;">Create Account</a>

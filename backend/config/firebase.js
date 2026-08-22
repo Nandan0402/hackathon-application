@@ -130,8 +130,13 @@ const firebaseRestAuth = {
 
     const data = await res.json();
     if (!res.ok) {
-      const errorMsg = data.error?.message || 'Invalid email or password';
-      throw new Error(errorMsg);
+      const rawMsg = data.error?.message || 'INVALID_LOGIN_CREDENTIALS';
+      const errorMsg = rawMsg.includes('INVALID') || rawMsg.includes('NOT_FOUND')
+        ? 'Invalid email or password. Please check your credentials or click Autofill for demo accounts.'
+        : rawMsg;
+      const authErr = new Error(errorMsg);
+      authErr.statusCode = 401;
+      throw authErr;
     }
 
     return {

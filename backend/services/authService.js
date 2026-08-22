@@ -99,6 +99,7 @@ class AuthService {
           expiresIn: '3600'
         };
       } else {
+        err.statusCode = err.statusCode || 401;
         throw err;
       }
     }

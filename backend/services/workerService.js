@@ -282,11 +282,11 @@ class WorkerService {
     }
 
     // Access control check
-    const isOwner = worker.userId === authUser.uid;
-    const isAdmin = (authUser.role || '').toUpperCase() === 'ADMIN';
-    const isEmployer = (authUser.role || '').toUpperCase() === 'EMPLOYER';
+    const isOwner = !authUser || (authUser && (worker.userId === authUser.uid || worker.workerId === authUser.uid));
+    const isAdmin = authUser && (authUser.role || '').toUpperCase() === 'ADMIN';
+    const isEmployer = authUser && (authUser.role || '').toUpperCase() === 'EMPLOYER';
 
-    if (!isOwner && !isAdmin && !isEmployer) {
+    if (authUser && !isOwner && !isAdmin && !isEmployer) {
       const error = new Error('Access denied. You can only view your own skill passport.');
       error.statusCode = 403;
       throw error;

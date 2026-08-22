@@ -10,6 +10,116 @@
   <link rel="stylesheet" href="../css/components.css">
   <link rel="stylesheet" href="../css/navigation.css">
   <link rel="stylesheet" href="../css/dashboard.css">
+
+  <style>
+    /* Application Stepper Component */
+    .stepper-container {
+      display: flex;
+      justify-content: space-between;
+      position: relative;
+      margin: 1.5rem 0 2rem;
+    }
+
+    .stepper-container::before {
+      content: '';
+      position: absolute;
+      top: 18px;
+      left: 30px;
+      right: 30px;
+      height: 2px;
+      background: var(--border-color, rgba(255, 255, 255, 0.1));
+      z-index: 1;
+    }
+
+    .step-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      position: relative;
+      z-index: 2;
+      flex: 1;
+      text-align: center;
+    }
+
+    .step-icon {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: var(--bg-surface, #111936);
+      border: 2px solid var(--border-color, rgba(255, 255, 255, 0.15));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: var(--text-muted, #94a3b8);
+      margin-bottom: 0.5rem;
+      transition: all 0.2s ease;
+    }
+
+    .step-item.completed .step-icon {
+      background: var(--accent-green, #10b981);
+      border-color: var(--accent-green, #10b981);
+      color: #ffffff;
+      box-shadow: 0 0 12px rgba(16, 185, 129, 0.4);
+    }
+
+    .step-item.active .step-icon {
+      background: var(--bg-surface-hover, #1c2541);
+      border-color: var(--accent-blue, #3b82f6);
+      color: var(--accent-blue, #3b82f6);
+      box-shadow: 0 0 12px rgba(59, 130, 246, 0.4);
+    }
+
+    .step-label {
+      font-size: 0.775rem;
+      font-weight: 600;
+      color: var(--text-muted, #94a3b8);
+      max-width: 100px;
+    }
+
+    .step-item.completed .step-label {
+      color: var(--accent-green, #10b981);
+    }
+
+    .step-item.active .step-label {
+      color: var(--accent-blue, #3b82f6);
+      font-weight: 700;
+    }
+
+    /* Modal Backdrop */
+    .app-modal-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(10, 17, 40, 0.85);
+      backdrop-filter: blur(8px);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+      padding: 1.5rem;
+    }
+
+    .app-modal-backdrop.show {
+      display: flex;
+      animation: modalFadeIn 0.2s ease-out;
+    }
+
+    @keyframes modalFadeIn {
+      from { opacity: 0; transform: scale(0.96); }
+      to { opacity: 1; transform: scale(1); }
+    }
+
+    .app-modal-card {
+      background: var(--bg-surface, #111936);
+      border: 1px solid var(--border-color, rgba(255, 255, 255, 0.1));
+      border-radius: var(--radius-lg, 16px);
+      width: 100%;
+      max-width: 620px;
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.6);
+      overflow: hidden;
+    }
+  </style>
 </head>
 <body data-auth-required="worker">
   <div class="app-layout">
@@ -111,12 +221,12 @@
         <div class="card">
           <div class="card-header">
             <h3 class="card-title">Active Applications</h3>
-            <span class="badge badge-green">3 Applications Tracked</span>
+            <span class="badge badge-green" id="app-counter-badge">3 Applications Tracked</span>
           </div>
 
           <div class="card-body" style="padding: 0;">
             <div class="table-responsive">
-              <table class="data-table">
+              <table class="data-table" id="applications-table">
                 <thead>
                   <tr>
                     <th>Position Title</th>
@@ -127,8 +237,9 @@
                     <th>Action</th>
                   </tr>
                 </thead>
-                <tbody>
-                  <tr>
+                <tbody id="applications-tbody">
+                  <!-- Row 1 -->
+                  <tr data-app-id="app_101" data-job="Senior AI Research Engineer" data-company="Anthropic Labs" data-match="98" data-status="Interview Scheduled (Aug 24)" data-stage="3" data-notes="Candidate scored 98% on practical evaluation. Scheduled for 45-min system design interview via Google Meet.">
                     <td>
                       <strong style="color: var(--text-main);">Senior AI Research Engineer</strong>
                       <div style="font-size: 0.75rem; color: var(--text-dim);">Remote &bull; Full-time</div>
@@ -138,11 +249,14 @@
                     <td><span class="badge ai-match-badge">98% Match</span></td>
                     <td><span class="badge badge-green">Interview Scheduled (Aug 24)</span></td>
                     <td>
-                      <button class="btn btn-sm btn-primary" onclick="window.showToast('Interview details: Google Meet link sent to calendar', 'info')">View Details</button>
+                      <button class="btn btn-sm btn-primary app-detail-trigger">
+                        View Details
+                      </button>
                     </td>
                   </tr>
 
-                  <tr>
+                  <!-- Row 2 -->
+                  <tr data-app-id="app_102" data-job="Lead MLOps Infrastructure Architect" data-company="DataScale Enterprise" data-match="94" data-status="Screening Passed" data-stage="2" data-notes="Automated vector screening complete. Hiring manager reviewing portfolio credentials.">
                     <td>
                       <strong style="color: var(--text-main);">Lead MLOps Infrastructure Architect</strong>
                       <div style="font-size: 0.75rem; color: var(--text-dim);">Hybrid &bull; Full-time</div>
@@ -152,11 +266,14 @@
                     <td><span class="badge ai-match-badge">94% Match</span></td>
                     <td><span class="badge badge-blue">Screening Passed</span></td>
                     <td>
-                      <button class="btn btn-sm btn-secondary" onclick="window.showToast('AI screening summary loaded', 'info')">View Progress</button>
+                      <button class="btn btn-sm btn-secondary app-detail-trigger">
+                        View Progress
+                      </button>
                     </td>
                   </tr>
 
-                  <tr>
+                  <!-- Row 3 -->
+                  <tr data-app-id="app_103" data-job="Staff AI Systems Developer" data-company="NeuralFlow Systems" data-match="91" data-status="Submitted to Recruiter" data-stage="1" data-notes="Application registered in Firestore. Recruiter assigned.">
                     <td>
                       <strong style="color: var(--text-main);">Staff AI Systems Developer</strong>
                       <div style="font-size: 0.75rem; color: var(--text-dim);">Remote &bull; Full-time</div>
@@ -166,7 +283,9 @@
                     <td><span class="badge ai-match-badge">91% Match</span></td>
                     <td><span class="badge badge-gray">Submitted to Recruiter</span></td>
                     <td>
-                      <button class="btn btn-sm btn-secondary" onclick="window.showToast('Application record details loaded', 'info')">View Status</button>
+                      <button class="btn btn-sm btn-secondary app-detail-trigger">
+                        View Status
+                      </button>
                     </td>
                   </tr>
                 </tbody>
@@ -178,8 +297,206 @@
     </main>
   </div>
 
+  <!-- INTERACTIVE APPLICATION DETAILS MODAL -->
+  <div class="app-modal-backdrop" id="app-modal">
+    <div class="app-modal-card">
+      <div class="card-header" style="padding: 1.5rem; border-bottom: 1px solid var(--border-color-light);">
+        <div>
+          <span class="badge badge-green" id="modal-app-status" style="font-size: 0.75rem;">Interview Scheduled</span>
+          <h3 id="modal-job-title" style="margin: 0.4rem 0 0.15rem; font-size: 1.35rem; color: var(--text-main);">Senior AI Research Engineer</h3>
+          <p id="modal-company-name" style="margin: 0; font-size: 0.9rem; color: var(--text-muted); font-weight: 600;">Anthropic Labs</p>
+        </div>
+        <button type="button" class="btn btn-secondary btn-sm" id="close-modal-btn" style="padding: 0.35rem 0.65rem;">&times;</button>
+      </div>
+
+      <div class="card-body" style="padding: 1.5rem;">
+        
+        <!-- AI Match Metric -->
+        <div style="display: flex; align-items: center; justify-content: space-between; padding: 1rem; background: var(--bg-dark); border-radius: var(--radius-md); border: 1px solid var(--border-color-light); margin-bottom: 1.5rem;">
+          <div>
+            <div style="font-size: 0.8rem; color: var(--text-dim); text-transform: uppercase; font-weight: 700;">AI Compatibility Vector</div>
+            <div style="font-size: 1.4rem; font-weight: 800; color: var(--accent-green);" id="modal-match-score">98% Match</div>
+          </div>
+          <div class="skill-tags" id="modal-skill-tags">
+            <span class="skill-chip matched">✓ Skills Aligned</span>
+            <span class="skill-chip matched">✓ Experience Verified</span>
+          </div>
+        </div>
+
+        <!-- 4-Stage Stepper -->
+        <div style="font-size: 0.825rem; font-weight: 700; color: var(--text-main); margin-bottom: 0.5rem; text-transform: uppercase; letter-spacing: 0.05em;">
+          Application Timeline & Pipeline Stage
+        </div>
+        <div class="stepper-container" id="modal-stepper">
+          <div class="step-item completed" id="step-1">
+            <div class="step-icon">✓</div>
+            <div class="step-label">Applied</div>
+          </div>
+          <div class="step-item completed" id="step-2">
+            <div class="step-icon">✓</div>
+            <div class="step-label">AI Screened</div>
+          </div>
+          <div class="step-item active" id="step-3">
+            <div class="step-icon">3</div>
+            <div class="step-label">Interview</div>
+          </div>
+          <div class="step-item" id="step-4">
+            <div class="step-icon">4</div>
+            <div class="step-label">Offer / Hire</div>
+          </div>
+        </div>
+
+        <!-- Recruiter & Stage Notes -->
+        <div style="padding: 1rem; background: var(--bg-dark); border-radius: var(--radius-md); border: 1px solid var(--border-color-light); margin-bottom: 1.5rem;">
+          <div style="font-size: 0.775rem; color: var(--text-dim); font-weight: 700; text-transform: uppercase; margin-bottom: 0.35rem;">
+            Hiring Manager & System Notes
+          </div>
+          <p style="margin: 0; font-size: 0.875rem; color: var(--text-main); line-height: 1.5;" id="modal-notes">
+            Candidate scored 98% on practical evaluation. Scheduled for 45-min system design interview via Google Meet.
+          </p>
+        </div>
+
+        <!-- Modal Actions -->
+        <div class="flex justify-between items-center gap-3">
+          <button type="button" class="btn btn-secondary flex-1" id="modal-meet-btn" onclick="window.open('https://meet.google.com', '_blank')">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 10l5-5v14l-5-5z"/><rect x="1" y="5" width="14" height="14" rx="2"/></svg>
+            Join Google Meet
+          </button>
+          <button type="button" class="btn btn-primary flex-1" id="close-modal-footer-btn">
+            Done
+          </button>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
   <script src="../js/main.js"></script>
   <script src="../js/auth.js"></script>
   <script src="../js/worker.js"></script>
+
+  <script>
+    // Initialize interactive application modal handlers
+    document.addEventListener('DOMContentLoaded', () => {
+      const modal = document.getElementById('app-modal');
+      const closeBtn = document.getElementById('close-modal-btn');
+      const closeFooterBtn = document.getElementById('close-modal-footer-btn');
+
+      const modalJobTitle = document.getElementById('modal-job-title');
+      const modalCompany = document.getElementById('modal-company-name');
+      const modalStatus = document.getElementById('modal-app-status');
+      const modalMatch = document.getElementById('modal-match-score');
+      const modalNotes = document.getElementById('modal-notes');
+
+      function openModalWithData(job, company, match, status, stage, notes) {
+        modalJobTitle.textContent = job;
+        modalCompany.textContent = company;
+        modalStatus.textContent = status;
+        modalMatch.textContent = `${match}% Match`;
+        modalNotes.textContent = notes || 'Application active in hiring pipeline.';
+
+        // Update 4-step timeline states
+        const stageNum = parseInt(stage) || 1;
+        for (let i = 1; i <= 4; i++) {
+          const step = document.getElementById(`step-${i}`);
+          if (!step) continue;
+          step.className = 'step-item';
+          const icon = step.querySelector('.step-icon');
+
+          if (i < stageNum) {
+            step.classList.add('completed');
+            if (icon) icon.textContent = '✓';
+          } else if (i === stageNum) {
+            step.classList.add('active');
+            if (icon) icon.textContent = i;
+          } else {
+            if (icon) icon.textContent = i;
+          }
+        }
+
+        modal.classList.add('show');
+      }
+
+      function closeModal() {
+        modal.classList.remove('show');
+      }
+
+      if (closeBtn) closeBtn.addEventListener('click', closeModal);
+      if (closeFooterBtn) closeFooterBtn.addEventListener('click', closeModal);
+      if (modal) {
+        modal.addEventListener('click', (e) => {
+          if (e.target === modal) closeModal();
+        });
+      }
+
+      // Attach click listeners to all application rows
+      function bindRowTriggers() {
+        document.querySelectorAll('.app-detail-trigger').forEach((btn) => {
+          btn.onclick = (e) => {
+            e.preventDefault();
+            const row = btn.closest('tr');
+            if (row) {
+              const job = row.getAttribute('data-job') || row.cells[0]?.querySelector('strong')?.textContent || 'AI Engineer';
+              const company = row.getAttribute('data-company') || row.cells[1]?.textContent || 'Anthropic Labs';
+              const match = row.getAttribute('data-match') || '95';
+              const status = row.getAttribute('data-status') || row.cells[4]?.textContent || 'Active';
+              const stage = row.getAttribute('data-stage') || '2';
+              const notes = row.getAttribute('data-notes') || 'Candidate profile submitted and verified.';
+
+              openModalWithData(job, company, match, status, stage, notes);
+            }
+          };
+        });
+      }
+
+      // Load additional dynamic applications from local session
+      function loadDynamicApplications() {
+        const appliedJobs = JSON.parse(localStorage.getItem('nexus_applied_jobs') || '[]');
+        const tbody = document.getElementById('applications-tbody');
+        const counterBadge = document.getElementById('app-counter-badge');
+
+        if (appliedJobs.length > 0 && tbody) {
+          appliedJobs.forEach((app, idx) => {
+            // Check if already in table
+            if (!document.querySelector(`tr[data-job="${app.jobTitle}"]`)) {
+              const newRow = document.createElement('tr');
+              newRow.setAttribute('data-app-id', `dyn_app_${idx}`);
+              newRow.setAttribute('data-job', app.jobTitle);
+              newRow.setAttribute('data-company', app.company || 'Enterprise Partner');
+              newRow.setAttribute('data-match', '98');
+              newRow.setAttribute('data-status', 'Applied (Under AI Review)');
+              newRow.setAttribute('data-stage', '1');
+              newRow.setAttribute('data-notes', `1-Click application submitted on ${new Date(app.appliedAt || Date.now()).toLocaleDateString()}. Verification in progress.`);
+
+              newRow.innerHTML = `
+                <td>
+                  <strong style="color: var(--text-main);">${app.jobTitle}</strong>
+                  <div style="font-size: 0.75rem; color: var(--text-dim);">Remote &bull; Full-time</div>
+                </td>
+                <td>${app.company || 'Enterprise Partner'}</td>
+                <td>Just Now</td>
+                <td><span class="badge ai-match-badge">98% Match</span></td>
+                <td><span class="badge badge-green">Applied (Under AI Review)</span></td>
+                <td>
+                  <button class="btn btn-sm btn-primary app-detail-trigger">
+                    View Details
+                  </button>
+                </td>
+              `;
+              tbody.prepend(newRow);
+            }
+          });
+
+          if (counterBadge) {
+            const total = tbody.querySelectorAll('tr').length;
+            counterBadge.textContent = `${total} Applications Tracked`;
+          }
+        }
+      }
+
+      loadDynamicApplications();
+      bindRowTriggers();
+    });
+  </script>
 </body>
 </html>

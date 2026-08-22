@@ -2,6 +2,37 @@
    AI HIRING PLATFORM - MAIN GLOBAL SCRIPT
    ========================================================================== */
 
+// Global API Base URL Resolution for all dashboard pages
+(function initGlobalApiConfig() {
+  const hostname = window.location.hostname || '';
+  const port = window.location.port || '';
+
+  let baseUrl = '/api';
+  if (
+    hostname === 'localhost' ||
+    hostname === '127.0.0.1' ||
+    hostname === '0.0.0.0' ||
+    port === '5500' ||
+    port === '5501' ||
+    port === '3000' ||
+    port === '8080' ||
+    window.location.protocol === 'file:'
+  ) {
+    baseUrl = 'http://localhost:5000/api';
+  }
+
+  window.API_CONFIG = window.API_CONFIG || {
+    BASE_URL: baseUrl,
+    ENDPOINTS: {
+      LOGIN: '/auth/login',
+      REGISTER: '/auth/register',
+      GOOGLE: '/auth/google',
+      ME: '/auth/profile'
+    },
+    ENABLE_MOCK_FALLBACK: true
+  };
+})();
+
 document.addEventListener('DOMContentLoaded', () => {
   initSidebarToggle();
   initToastSystem();

@@ -4,19 +4,41 @@
    ========================================================================== */
 
 /**
- * Backend API Configuration
- * Update BASE_URL when connecting your backend REST server (Node.js/Express, Python/FastAPI, etc.)
+ * Robust Backend API Base URL Resolver
  */
-const API_CONFIG = {
-  BASE_URL: window.location.origin.includes('localhost') ? 'http://localhost:5000/api' : '/api',
+function getApiBaseUrl() {
+  const hostname = window.location.hostname || '';
+  const port = window.location.port || '';
+
+  // Detect local development environments (Live Server, 127.0.0.1, localhost, file:)
+  if (
+    hostname === 'localhost' ||
+    hostname === '127.0.0.1' ||
+    hostname === '0.0.0.0' ||
+    port === '5500' ||
+    port === '5501' ||
+    port === '3000' ||
+    port === '8080' ||
+    window.location.protocol === 'file:'
+  ) {
+    return 'http://localhost:5000/api';
+  }
+
+  return '/api';
+}
+
+window.API_CONFIG = window.API_CONFIG || {
+  BASE_URL: getApiBaseUrl(),
   ENDPOINTS: {
     LOGIN: '/auth/login',
     REGISTER: '/auth/register',
-    ME: '/auth/me'
+    GOOGLE: '/auth/google',
+    ME: '/auth/profile'
   },
-  // Set to true to allow seamless local demonstration without a running backend server
   ENABLE_MOCK_FALLBACK: true
 };
+
+const API_CONFIG = window.API_CONFIG;
 
 /**
  * Key definitions for session persistence

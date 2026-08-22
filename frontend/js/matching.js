@@ -73,11 +73,20 @@ function initMatchingEngine() {
   if (findBtn && jobSelect) {
     findBtn.addEventListener('click', async () => {
       const selectedJobId = jobSelect.value;
+      if (!selectedJobId) {
+        const container = document.getElementById('matching-candidates-container');
+        if (container) {
+          container.innerHTML = `
+            <div class="card" style="text-align: center; padding: 2rem;">
+              <p style="color: var(--text-muted);">Please select an active job requisition first, then click <strong>Find Candidates</strong>.</p>
+            </div>
+          `;
+        }
+        return;
+      }
       await executeFindCandidates(selectedJobId);
     });
-
-    // Auto load matches on initial page render
-    executeFindCandidates(jobSelect.value);
+    // Do NOT auto-fire on page load — the job dropdown may still be loading
   }
 }
 
@@ -87,6 +96,16 @@ function initMatchingEngine() {
 async function executeFindCandidates(jobId) {
   const container = document.getElementById('matching-candidates-container');
   if (!container) return;
+
+  // Guard: don't call the API with an empty jobId
+  if (!jobId || jobId.trim() === '') {
+    container.innerHTML = `
+      <div class="card" style="text-align: center; padding: 2rem;">
+        <p style="color: var(--text-muted);">Please select an active job requisition first, then click <strong>Find Candidates</strong>.</p>
+      </div>
+    `;
+    return;
+  }
 
   // Show Loading State
   container.innerHTML = `
